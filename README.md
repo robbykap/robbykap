@@ -1,118 +1,58 @@
-
-
 <h1 align=center>About Me</h1>
 
-<!-- <table align=center>
+<table align=center>
+
+<tr>
+<td><table>
 
 <tr>
 <td><h3>Name:</h3></td>
-<td><h3>Robert Greathouse</h3></td>
+<td><h3 align=center>Robert Greathouse</h3></td>
 </tr>
 
 <tr>
 <td><h3>School:</h3></td>
-<td><h3>Brigham Young University</h3></td>
+<td><h3 align=center>Brigham Young University</h3></td>
 </tr>
 
 <tr>
 <td><h3>Major:</h3></td>
-<td><h3>Computer Science</h3></td>
+<td><h3 align=center>Computer Science</h3></td>
 </tr>
 
 <tr>
 <td><h3>Year:</h3></td>
-<td><h3>Junior</h3></td>
+<td><h3 align=center>Junior</h3></td>
 </tr>
 
-</table> -->
+</table></td>
 
-<svg fill="none" viewBox="0 0 800 400" width="800" height="400" xmlns="http://www.w3.org/2000/svg">
-	<foreignObject width="100%" height="100%">
-		<div xmlns="http://www.w3.org/1999/xhtml">
-			<style>
-				@keyframes rotate {
-					0% {
-						transform: rotate(3deg);
-					}
-					100% {
-						transform: rotate(-3deg);
-					}
-				}
+<td> <table>
 
-				@keyframes gradientBackground {
-					0% {
-						background-position: 0% 50%;
-					}
-					50% {
-						background-position: 100% 50%;
-					}
-					100% {
-						background-position: 0% 50%;
-					}
-				}
+<tr>
+<td><h3>Languages:</h3></td>
+<td><h3 align=center>Python</h3></td>
+</tr>
 
-				@keyframes fadeIn {
-					0% {
-						opacity: 0;
-					}
-					66% {
-						opacity: 0;
-					}
-					100% {
-						opacity: 1;
-					}
-				}
+<tr>
+<td><h3>Learning:</h3></td>
+<td><h3 align=center>C++, HTML, CSS, React</h3></td>
+</tr>
 
-				.container {
-					font-family:
-						system-ui,
-						-apple-system,
-						'Segoe UI',
-						Roboto,
-						Helvetica,
-						Arial,
-						sans-serif,
-						'Apple Color Emoji',
-						'Segoe UI Emoji';
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: center;
-					margin: 0;
-					width: 100%;
-					height: 400px;
-					background: linear-gradient(-45deg, #fc5c7d, #6a82fb, #05dfd7);
-					background-size: 600% 400%;
-					animation: gradientBackground 10s ease infinite;
-					border-radius: 10px;
-					color: white;
-					text-align: center;
-				}
+<tr>
+<td><h3>Taking:</h3></td>
+<td><h3 align=center>CS 235 & 260</h3></td>
+</tr>
 
-				h1 {
-					font-size: 50px;
-					line-height: 1.3;
-					letter-spacing: 5px;
-					text-transform: uppercase;
-					text-shadow:
-						0 1px 0 #efefef,
-						0 2px 0 #efefef,
-						0 3px 0 #efefef,
-						0 4px 0 #efefef,
-						0 12px 5px rgba(0, 0, 0, 0.1);
-					animation: rotate ease-in-out 1s infinite alternate;
-				}
+<tr>
+<td><h3>Work:</h3></td>
+<td><h3 align=center>CS 110 TA</h3></td>
+</tr>
 
-				p {
-					font-size: 20px;
-					text-shadow: 0 1px 0 #efefef;
-					animation: 5s ease 0s normal forwards 1 fadeIn;
-				}
-			</style>
-			<div class="container">
-				<h1>Made with HTML &amp; CSS<br/>not an animated GIF</h1>
-				<p>Click to see the source</p>
-			</div>
-		</div>
-	</foreignObject>
-</svg>
+</table></td>
+
+</tr>
+
+</table>
+
+<h3 align=center>Currently Working On: <a href="https://github.com/robbykap/startup">STARTUP</a> for CS 260 (Web Development)</h3>
