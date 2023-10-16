@@ -1,6 +1,16 @@
 <h1 align=center>About Me</h1>
 
-<table align=center>
+
+| | | | |
+|:--- |:--- |:--- |:--- |
+|**Name:** |Robert Greathouse |**Languages:** |Python |
+|**School:** |Brigham Young University |**Learrning:** |C++, HTML, CSS, React|
+|**Major:** |Computer Science |**Taking:** |CS 235 260|
+|**Year:** |Junior |**Work:** |CS 110 TA |
+
+
+
+<!-- <table align=center>
 
 <tr>
 <td><table>
@@ -23,9 +33,9 @@
 <tr>
 <td><h3>Year:</h3></td>
 <td><h3 align=center>Junior</h3></td>
-</tr>
+</tr> -->
 
-</table></td>
+<!-- </table></td>
 
 <td> <table>
 
@@ -53,7 +63,7 @@
 
 </tr>
 
-</table>
+</table> -->
 
 </br>
 
