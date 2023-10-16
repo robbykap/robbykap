@@ -1,4 +1,3 @@
-<style>h1,h2,h3,h4 { border-bottom: 0; } </style>
 <div align=center>
     <h1>About Me</h1>
     </br>
