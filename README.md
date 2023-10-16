@@ -55,4 +55,13 @@
 
 </table>
 
-<h3 align=center>Currently Working On: <a href="https://github.com/robbykap/startup">STARTUP</a> for CS 260 (Web Development)</h3>
+</br>
+
+<h3 align=left>Currently Working On:</h3>
+<p align=left><a href="https://github.com/robbykap/startup">STARTUP</a> for CS 260 (Web Development)</p>
+
+</br>
+
+<h3 align=left>Reach Me At:</h3>
+<p align=left>Email: <a href="mailto: robbykapua@gmail.com">robbykapua@gmail.com</a></p>
+<p align=left>Linkedin: <a href="https://www.linkedin.com/in/robert-greathouse-19ba24161/">Robert Greathouse</a></p>
