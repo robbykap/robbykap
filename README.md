@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                     <td><b><span align=left>Major:</span></b></td>
-                    <td><span align=left>Computer Science</span></td>
+                    <td><span align=left>Machine Learning</span></td>
                     <td><b><span align=left>Taking:</span></b></td>
                     <td><span align=left>CS 235 & CS 260</span></td>
                 </tr>
