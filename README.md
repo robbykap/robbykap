@@ -1,9 +1,3 @@
-<style scoped>
-table {
-  font-size: 18px;
-}
-</style>
-
 <h1 align=center>About Me</h1>
 
 </br>
