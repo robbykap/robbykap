@@ -2,7 +2,7 @@
 
 </br>
 
-<center>
+<div align=center>
 
 | | | | |
 |:--- |:--- |:--- |:--- |
@@ -11,8 +11,7 @@
 |**Major:** |Computer Science |**Taking:** |CS 235 260|
 |**Year:** |Junior |**Work:** |CS 110 TA |
 
-</center>
-
+</div>
 
 
 <!-- <table align=center>
@@ -38,9 +37,9 @@
 <tr>
 <td><h3>Year:</h3></td>
 <td><h3 align=center>Junior</h3></td>
-</tr> -->
+</tr> 
 
-<!-- </table></td>
+</table></td>
 
 <td> <table>
 
