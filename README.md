@@ -1,5 +1,14 @@
+<style scoped>
+table {
+  font-size: 18px;
+}
+</style>
+
 <h1 align=center>About Me</h1>
 
+</br>
+
+<center>
 
 | | | | |
 |:--- |:--- |:--- |:--- |
@@ -7,6 +16,8 @@
 |**School:** |Brigham Young University |**Learrning:** |C++, HTML, CSS, React|
 |**Major:** |Computer Science |**Taking:** |CS 235 260|
 |**Year:** |Junior |**Work:** |CS 110 TA |
+
+</center>
 
 
 
