@@ -26,7 +26,7 @@
                 <tr>
                     <td><b><span align=left>Year:</span></b></td>
                     <td><span align=left>Junior</span></td>
-                    <td><b><span align=left>Working:</span></b></td>
+                    <td><b><span align=left>Work:</span></b></td>
                     <td><span align=left>CS 110 TA</span></td>
                 </tr>
             </tbody>
