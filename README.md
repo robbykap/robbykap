@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <td><b><span align=left>Year:</span></b></td>
-                    <td><span align=left>Sophmore</span></td>
+                    <td><span align=left>Junior</span></td>
                     <td><b><span align=left>Work:</span></b></td>
                     <td><span align=left>CS 110 TA</span></td>
                 </tr>
