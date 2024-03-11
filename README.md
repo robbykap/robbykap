@@ -21,7 +21,7 @@
                     <td><b><span align=left>Major:</span></b></td>
                     <td><span align=left>Machine Learning</span></td>
                     <td><b><span align=left>Taking:</span></b></td>
-                    <td><span align=left>CS 201 R & CS 236</span></td>
+                    <td><span align=left>CS 270 & CS 236</span></td>
                 </tr>
                 <tr>
                     <td><b><span align=left>Year:</span></b></td>
