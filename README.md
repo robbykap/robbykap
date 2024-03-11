@@ -48,6 +48,7 @@
     </br>
         <h3>Current Projects:</h3>
         <p><a href="https://github.com/robbykap/CS270-Intro_to_ML">NFL Play Predictor</a> for <b>CS 270</b> a Machine Learning class</p>
+     </br>
         <h3>Past Projects:</h3>
         <p><a href="https://github.com/robbykap/CS260">Optimal Lifts</a> for <b>CS 260</b> a web development class</p>
     </div>
