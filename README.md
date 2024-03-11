@@ -40,7 +40,7 @@
     <div style="width:750px">
     </br>
         <h3 >Currently Taking:</h3>
-        <p><b>CS 201 R</b> which is an intro machine learning class that covers topics on
+        <p><b>CS 270</b> which is an intro machine learning class that covers topics on
         neural networks, decision trees, nearest neighbor learning, data mining, feature selection, clustering, ensembles, reinforcement learning, and deep learning.</p>
         <p><b>CS 236</b> which covers fundamental ideas in discrete mathematics and their application to computer science.</p>
     </div>
