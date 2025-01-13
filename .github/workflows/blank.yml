@@ -30,8 +30,8 @@ jobs:
 
           # Navigate to the directory containing your program
 
-          cd path/to/your/program/directory
+          cd robbykap/program/
 
           # Run the program
 
-          ./your_program_executable
+          ./test.py
