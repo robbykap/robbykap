@@ -34,4 +34,6 @@ jobs:
 
           # Run the program
 
-          ./test.py
+          echo "Running a terminal command here"
+          
+          python3 test.py 
