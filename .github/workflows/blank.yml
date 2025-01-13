@@ -35,4 +35,4 @@ jobs:
           
           echo "Installed MDXCanvas"
           
-          mdxcanvas --course-info ${{ github.workspace }}/program/testing_course_info.json ${{ github.workspace }}/program/scratch/sample-content.canvas.md.xml
+          mdxcanvas --canvas_api_token --course-info ${{ github.workspace }}/program/testing_course_info.json ${{ github.workspace }}/program/scratch/sample-content.canvas.md.xml
