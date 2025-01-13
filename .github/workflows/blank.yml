@@ -30,7 +30,7 @@ jobs:
 
           # Navigate to the directory containing your program
 
-          cd ${{ github.workspace }}/robbykap/program/
+          cd ${{ github.workspace }}/program/
 
           # Run the program
 
