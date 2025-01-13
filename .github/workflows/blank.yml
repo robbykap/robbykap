@@ -34,6 +34,8 @@ jobs:
 
           # Run the program
 
-          echo "Running a terminal command here"
+          echo "Installing MDXCanvas"
           
-          python3 test.py 
+          pip install mdxcanvas
+          
+          echo "Installed MDXCanvas"
