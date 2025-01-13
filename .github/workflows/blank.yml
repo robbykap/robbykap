@@ -27,11 +27,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: | 
-
-          # Navigate to the directory containing your program
-
-          cd ${{ github.workspace }}/program/
-
           # Run the program
 
           echo "Installing MDXCanvas"
@@ -39,3 +34,5 @@ jobs:
           pip install mdxcanvas
           
           echo "Installed MDXCanvas"
+          
+          mdxcanvas --course-info ${{ github.workspace }}/program/testing_course_info.json ${{ github.workspace }}/program/scratch/sample-content.canvas.md.xml
