@@ -1,0 +1,37 @@
+name: Run Program on Merge
+
+
+
+on:
+
+  push:
+
+    branches: [main]  
+
+  pull_request:
+
+    branches: [main] 
+
+    types: [merged] 
+
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - run: | 
+
+          # Navigate to the directory containing your program
+
+          cd path/to/your/program/directory
+
+          # Run the program
+
+          ./your_program_executable
