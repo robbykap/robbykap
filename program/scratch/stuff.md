@@ -1,7 +1,16 @@
-### Stuff
+[tool.poetry]
+name = "mdxcanvas"
 
-This is *stuff* found in a **markdown** file.
 
-> Epic.
 
-:)
+
+
+
+
+
+
+
+
+
+version = "0.3.16"
+

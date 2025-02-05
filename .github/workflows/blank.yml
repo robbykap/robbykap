@@ -1,7 +1,6 @@
 name: Run Program on Merge
 
 
-
 on:
 
   push:
@@ -27,16 +26,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: | 
-          # Run the program
-
-          echo "Installing MDXCanvas"
+          # Get version from stuff.md
+            VERSION=$(grep -o "version = \".*\"" stuff.md | cut -d'"' -f2)
           
-          pip install mdxcanvas
-
-          echo "Set env var"
-
-          export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
+          # Get version from mdxcanvas
+            MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
           
-          echo "Installed MDXCanvas"
+          # Check if versions are the same
+            if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; Please update .tomal"; fi
           
-          mdxcanvas --course-info ${{ github.workspace }}/program/testing_course_info.json ${{ github.workspace }}/program/scratch/sample-content.canvas.md.xml
+      
