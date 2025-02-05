@@ -30,7 +30,7 @@ jobs:
             pip install mdxcanvas
           
           # Get version from stuff.md
-            VERSION=$(grep -o "version = \".*\"" stuff.md | cut -d'"' -f2)
+            VERSION=$(grep -o "version = \".*\"" ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
           
           # Get version from mdxcanvas
             MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
