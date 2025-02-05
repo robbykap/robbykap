@@ -33,7 +33,7 @@ jobs:
       - id: s4
         name: Check versions
         run: |
-          if [ "$(printf '%s\n' "$VERSION" "$MDXCANVAS_VERSION" | sort -V | head -n1)" != "$VERSION" ]; then
+          if [ "$(printf '%s\n' "$VERSION" "$MDXCANVAS_VERSION" | sort -V | head -n1)" = "$VERSION" ]; then
             exit 1
           fi
 
