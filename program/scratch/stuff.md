@@ -1,4 +1,4 @@
 [tool.poetry]
 name = "mdxcanvas"
-version = "0.3.16"
+version = "0.3.17"
 
