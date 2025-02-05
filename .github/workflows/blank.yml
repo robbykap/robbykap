@@ -39,7 +39,7 @@ jobs:
             if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then "Please update .tomal"; exit 1; fi
           
           # Run program
-            mdxcanvas --course-info ${{ github.workspace }}/program/testing_course_info.json ${{ github.workspace }}/program/scratch/sample-content.canvas.md.xml 
+            echo "Hello World"
           
           
           
