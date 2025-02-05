@@ -1,46 +1,34 @@
 name: Run Program on Merge
 
-
 on:
-
   push:
-
     branches: [main]  
-
   pull_request:
-
-    branches: [main] 
-
-    types: [merged] 
-
-
+    branches: [main]
+    types: [merged]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - uses: actions/checkout@v3
 
       - run: | 
           # Install mdxcanvas
-            pip install mdxcanvas
+          pip install mdxcanvas
           
           # Get version from stuff.md
-            VERSION=$(grep -o "version = \".*\"" ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
+          VERSION=$(grep -o 'version = ".*"' ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
           
           # Get version from mdxcanvas
-            MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
+          MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
           
           # Check if versions are the same
-            if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then "Please update .tomal"; exit -1; fi
+          if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then 
+            echo "Error: Please update .toml"
+            exit 1
+          fi
           
           # Run program
-            echo "Hello World"
-          
-          
-          
-      
+          echo "Hello World"
