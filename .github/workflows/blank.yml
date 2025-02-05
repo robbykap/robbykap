@@ -44,5 +44,6 @@ jobs:
           echo "Error: Please update version in .toml"
 
       - id: s6
+        if: success()
         name: Run program
         run: echo "Hello World"
