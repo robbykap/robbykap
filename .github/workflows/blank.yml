@@ -36,7 +36,7 @@ jobs:
             MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
           
           # Check if versions are the same
-            if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then "Please update .tomal"; exit 1; fi
+            if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then "Please update .tomal"; exit -1; fi
           
           # Run program
             echo "Hello World"
