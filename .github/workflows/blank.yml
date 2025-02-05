@@ -2,7 +2,7 @@ name: Run Program on Merge
 
 on:
   push:
-    branches: [main]  
+    branches: [main]
   pull_request:
     branches: [main]
     types: [merged]
@@ -14,21 +14,37 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: | 
-          # Install mdxcanvas
-          pip install mdxcanvas
-          
-          # Get version from stuff.md
+      - id: s1
+        name: Install mdxcanvas
+        run: pip install mdxcanvas
+
+      - id: s2
+        name: Get toml version
+        run: |
           VERSION=$(grep -o 'version = ".*"' ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
-          
-          # Get version from mdxcanvas
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - id: s3
+        name: Get mdxcanvas version
+        run: |
           MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
-          
-          # Check if versions are the same
-          if [ "$VERSION" = "$MDXCANVAS_VERSION" ]; then 
+          echo "MDXCANVAS_VERSION=$MDXCANVAS_VERSION" >> $GITHUB_ENV
+
+      - id: s4
+        name: Check versions
+        run: |
+          if [ "$VERSION" != "$MDXCANVAS_VERSION" ]; then 
             echo "Error: Please update .toml"
             exit 1
           fi
-          
-          # Run program
-          echo "Hello World"
+
+      - id: s5
+        if: success()
+        name: Run program
+        run: echo "Hello World"
+
+      - id: s6
+        if: failure()
+        name: Error
+        run: |
+          echo "Error: Please update .toml"
