@@ -12,38 +12,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - id: s1
-        name: Install mdxcanvas
+      - name: Install mdxcanvas
         run: pip install mdxcanvas
 
-      - id: s2
-        name: Get toml version
+      - name: Extract version from toml
         run: |
           VERSION=$(grep -o 'version = ".*"' ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - id: s3
-        name: Get mdxcanvas version
+      - name: Get installed mdxcanvas version
         run: |
           MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
           echo "MDXCANVAS_VERSION=$MDXCANVAS_VERSION" >> $GITHUB_ENV
 
-      - id: s4
-        name: Check versions
+      - name: Check version mismatch
         run: |
           if [ "$(printf '%s\n' "$VERSION" "$MDXCANVAS_VERSION" | sort -V | head -n1)" = "$VERSION" ]; then
+            echo "Error: Please update version in .toml"
             exit 1
           fi
 
-      - id: s5
-        if: failure()
-        name: Error
-        run: |
-          echo "Error: Please update version in .toml"
-
-      - id: s6
+      - name: Install Poetry
         if: success()
-        name: Run program
-        run: echo "Hello World"
+        run: pip install poetry
+
+      - name: Build mdxcanvas package
+        if: success()
+        run: poetry build
