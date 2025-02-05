@@ -36,9 +36,7 @@ jobs:
           fi
 
       - name: Install Poetry
-        if: success()
         run: pip install poetry
 
       - name: Build mdxcanvas package
-        if: success()
         run: poetry build
