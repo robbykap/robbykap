@@ -30,7 +30,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--files')
     args = parser.parse_args()
-    
+
     docker_files = find_changed_assignments(args.files)
 
     if not docker_files:
