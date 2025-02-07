@@ -20,8 +20,8 @@ jobs:
       - name: Get changes
         run: |
             files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
-            echo ${files}
-              
+            echo "Changed files: ${files}"
+            echo "FILES=$files" >> $GITHUB_ENV
 
       - name: Build docker images
-        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files ${files}
+        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files "$FILES"
