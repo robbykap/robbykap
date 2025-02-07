@@ -28,7 +28,7 @@ def find_changed_assignments(files: list[Path]) -> list[Path]:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--files', required=True, nargs='+')
+    parser.add_argument('--files')
     args = parser.parse_args()
 
     docker_files = find_changed_assignments(args.files)
@@ -37,12 +37,15 @@ if __name__ == '__main__':
         print('No docker files found')
         exit(0)
 
+    print('Building docker images:')
+    for docker in docker_files:
+        print(f' - {Path(docker).name}')
+
     processes = []
     # Standard out goes to a file,
     # while error messages go straight to the screen.
     # After the files finish, their output is printed.
     for docker in docker_files:
-        print(f"Running: {docker}")
         # create a pipe to connect the StringIO to the process
         r_fd, w_fd = os.pipe()
         p = subprocess.Popen(['bash', docker], cwd=docker.parent,
@@ -60,7 +63,4 @@ if __name__ == '__main__':
         # close the read end of the pipe
         os.close(read_pipe)
 
-    print('Scripts run:')
-    print('\n'.join(map(str, docker_files)))
-
-    print('All done updated docker images')
+    print('Finished building docker images')
