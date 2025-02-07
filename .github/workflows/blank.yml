@@ -18,4 +18,6 @@ jobs:
           fetch-depth: 0
 
       - name: Get changes
-        run: files=$(git diff ${{ github.event.before }} ${{ github.event.after }})
+        run: |
+             files=$(git diff ${{ github.event.before }} ${{ github.event.after }})
+             echo $files
