@@ -28,7 +28,7 @@ def find_changed_assignments(files: list[Path]) -> list[Path]:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--files', required=True, nargs='+')
+    parser.add_argument("files", type=Path)
     args = parser.parse_args()
 
     docker_files = find_changed_assignments(args.files)
