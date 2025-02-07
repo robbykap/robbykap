@@ -33,6 +33,10 @@ if __name__ == '__main__':
 
     docker_files = find_changed_assignments(args.files)
 
+    if not docker_files:
+        print('No docker files found')
+        exit(0)
+
     processes = []
     # Standard out goes to a file,
     # while error messages go straight to the screen.
@@ -58,3 +62,5 @@ if __name__ == '__main__':
 
     print('Scripts run:')
     print('\n'.join(map(str, docker_files)))
+
+    print('All done updated docker images')
