@@ -1,4 +1,4 @@
-name: Run Program on Merge
+name: Automate Docker Images
 
 on:
   push:
@@ -12,31 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Install mdxcanvas
-        run: pip install mdxcanvas
-
-      - name: Extract version from toml
-        run: |
-          VERSION=$(grep -o 'version = ".*"' ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-      - name: Get installed mdxcanvas version
-        run: |
-          MDXCANVAS_VERSION=$(pip show mdxcanvas | grep "^Version:" | awk '{print $2}')
-          echo "MDXCANVAS_VERSION=$MDXCANVAS_VERSION" >> $GITHUB_ENV
-
-      - name: Check version mismatch
-        run: |
-          if [ "$(printf '%s\n' "$VERSION" "$MDXCANVAS_VERSION" | sort -V | head -n1)" = "$VERSION" ]; then
-            echo "Error: Please update version in .toml"
-            exit 1
-          fi
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Build mdxcanvas package
-        run: poetry build
+      - name: Get changes
+        run: files=$(git diff ${{ github.event.before }} ${{ github.event.after }})
