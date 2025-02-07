@@ -19,5 +19,5 @@ jobs:
 
       - name: Get changes
         run: |
-             files=$(git diff ${{ github.event.before }} ${{ github.event.after }})
+             files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
              echo $files
