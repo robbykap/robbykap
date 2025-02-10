@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-mdxcanvas-version:
-    uses: ${{ github.workspace }}/.github/actions/check-mdxcanvas.yaml
+    uses: ${{ github.workspace }}/.github/workflows/check-mdxcanvas.yaml
 
   build:
     runs-on: ubuntu-latest

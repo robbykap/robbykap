@@ -1,28 +1,28 @@
-name: Automate Docker Images
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-    types: [merged]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Get changes
-        id: changes
-        run: |
-            files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
-            echo "Changed files: ${files}"
-            echo "FILES=${files}" >> $GITHUB_ENV
-
-      - name: Build docker images
-        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files "${{ env.FILES }}"
+#name: Automate Docker Images
+#
+#on:
+#  push:
+#    branches: [main]
+#  pull_request:
+#    branches: [main]
+#    types: [merged]
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Get changes
+#        id: changes
+#        run: |
+#            files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
+#            echo "Changed files: ${files}"
+#            echo "FILES=${files}" >> $GITHUB_ENV
+#
+#      - name: Build docker images
+#        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files "${{ env.FILES }}"
