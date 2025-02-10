@@ -11,10 +11,34 @@ def find_build_docker_scripts(dir: Path):
             return file.absolute()
 
 
-def find_changed_assignments(files: list[Path]) -> list[Path]:
-    docker_files = []
+def find_assignments(files: list[Path]) -> list[Path]:
+    assignments = []
     for file in files:
         file = Path(file)
+        # Check if solution is the parent of the file
+        if file.parent.name == 'solution':
+            assignments.append(file.parent.parent)
+    return assignments
+
+
+def find_docker_scripts(files: list[Path]) -> list[Path]:
+    docker_files = []
+    changed_assignments = find_assignments(files)
+    for file in :
+        if (dir:=file.is_dir()) and dir in changed_assignments:
+            dockerfile = find_build_docker_scripts(dir)
+            if dockerfile:
+                docker_files.append(dockerfile)
+
+
+
+
+
+
+def find_docker_files(dir: Path) -> list[Path]:
+    docker_files = []
+    for file in files:
+        file = Path(file).resolve()
         # Check if solution is the parent of the file
         if file.parent.name == 'solution':
             parent_path = file.parent.parent
@@ -31,7 +55,8 @@ if __name__ == '__main__':
     parser.add_argument('--files')
     args = parser.parse_args()
 
-    docker_files = find_changed_assignments(args.files)
+    changed_assignments = find_changed_assignments(args.files)
+    docker_files = find_docker_files(changed_assignments)
 
     if not docker_files:
         print('No docker files found')
