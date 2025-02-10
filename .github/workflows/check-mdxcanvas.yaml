@@ -17,6 +17,8 @@ jobs:
         run: |
           VERSION=$(grep -o 'version = ".*"' ${{ github.workspace }}/program/scratch/stuff.md | cut -d'"' -f2)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo {$VERSION}
+          
 
       - name: Get installed mdxcanvas version
         run: |
