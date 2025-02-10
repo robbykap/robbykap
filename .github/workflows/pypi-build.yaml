@@ -1,0 +1,17 @@
+name: pypi_build
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  check-mdxcanvas-version:
+    uses: ${{ github.workspace }}/.github/actions/check-mdxcanvas.yaml
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Poetry
+        run: echo "hi"
