@@ -14,4 +14,4 @@ COPY solution/run_tests.py /autograder/src/
 
 EOF
 
-# docker pull ${IMAGE_NAME}:${IMAGE_TAG}
+ docker pull ${IMAGE_NAME}:${IMAGE_TAG}
