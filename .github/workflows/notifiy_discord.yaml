@@ -20,7 +20,7 @@ jobs:
         run: export CANVAS_API_TOKEN=${{ secrets.CANVAS_API_TOKEN }}
 
       - name: Run mdxcanvas
-        run: mdxcanvas --course-info ${{ github.workspace }}/scratch/test_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml 
+        run: mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml
 
       - name: Send commit info to Discord
         run: |
