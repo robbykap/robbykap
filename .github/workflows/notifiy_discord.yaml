@@ -21,8 +21,11 @@ jobs:
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
               echo "TO_DEPLOY"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
 
-      - name: Send commit info to Discord
+      - name: Format deployment list and send commit info to Discord
         run: |
+          # Remove "Items to deploy:" and add newline after each item
+          CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/Items to deploy://g' | sed 's/ - / - \n/g')
+          
           curl -H "Content-Type: application/json" \
                -X POST \
                -d '{
@@ -35,11 +38,9 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "${{ env.TO_DEPLOY }}"},
+                     {"name": "Items to deploy", "value": "${CLEANED_DEPLOY}"},
                      {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
                }' \
                ${{ secrets.DISCORD_WEBHOOK_URL }}
-          
-          
