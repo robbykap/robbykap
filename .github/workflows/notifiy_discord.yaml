@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install and Run MDXCanvas
+        id: run_mdxcanvas
         run: |
           echo "Installing MDXCanvas"
           pip install mdxcanvas
@@ -21,17 +22,17 @@ jobs:
           echo "Setting environment variables"
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
 
-          echo "Running MDXCanvas and logging output"
-          mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                    ${{ github.workspace }}/scratch/sample-content.canvas.md.xml | tee mdxcanvas.log
+          echo "Running MDXCanvas and capturing output"
+          OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
+                             ${{ github.workspace }}/scratch/sample-content.canvas.md.xml)
 
-      - name: Extract Deployed Items
-        run: |
-          # Extract assignments and quizzes from the log file
-          DEPLOYED_ASSIGNMENTS=$(grep "Deploying assignment" mdxcanvas.log | awk -F 'Deploying ' '{print $2}' | paste -sd ', ' -)
-          DEPLOYED_QUIZZES=$(grep "Deploying quiz" mdxcanvas.log | awk -F 'Deploying ' '{print $2}' | paste -sd ', ' -)
+          echo "$OUTPUT"
 
-          # Handle empty cases
+          # Extract assignments and quizzes directly from the output
+          DEPLOYED_ASSIGNMENTS=$(echo "$OUTPUT" | grep -oP 'Deploying assignment \K.*')
+          DEPLOYED_QUIZZES=$(echo "$OUTPUT" | grep -oP 'Deploying quiz \K.*')
+
+          # Format the output, joining with commas, or set to "None" if empty
           DEPLOYED_ASSIGNMENTS=${DEPLOYED_ASSIGNMENTS:-"None"}
           DEPLOYED_QUIZZES=${DEPLOYED_QUIZZES:-"None"}
 
