@@ -38,7 +38,7 @@
         points_possible="10"
         assignment_group="Examples"
     >
-        Do this stuff. Yesterday. :) update
+        Do this stuff. Yesterday. :)
     </assignment>
 
     <assignment
@@ -46,7 +46,7 @@
         points_possible="10"
         assignment_group="Examples"
     >
-        Do this stuff. Yesterday. :) update
+        Do this stuff. Yesterday. :)
     </assignment>
 
     <md-page title="Small" path="small.md"/>
@@ -67,7 +67,7 @@
             title="Example Quiz"
     >
         <description>
-            This is an **example** quiz! update
+            This is an **example** quiz! 
 
             You should read
             <course-link type="page" title="Example Page"/>
