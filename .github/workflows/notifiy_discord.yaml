@@ -19,8 +19,7 @@ jobs:
       - name: Run MDXCanvas
         run: |
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-              TO_DEPLOY=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun)
-              echo "TO_DEPLOY=${TO_DEPLOY}" >> $GITHUB_ENV
+              TO_DEPLOY=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
 
       - name: Clean up TO_DEPLOY variable
         run: |
