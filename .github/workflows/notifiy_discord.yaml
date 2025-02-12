@@ -23,12 +23,19 @@ jobs:
 
       - name: Clean up TO_DEPLOY variable
         run: |
-          # Clean the TO_DEPLOY value, remove "Items to deploy:" and add newline after each item
+          # Clean the TO_DEPLOY value, remove "Items to deploy:" and add literal newline characters
           CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/Items to deploy://g' | sed 's/ - / - \n/g')
-          echo "TO_DEPLOY=${CLEANED_DEPLOY}" >> $GITHUB_ENV
+          
+          # Escape the newline characters to preserve formatting in GitHub Actions environment
+          CLEANED_DEPLOY_ESCAPED=$(echo "$CLEANED_DEPLOY" | sed ':a;N;$!ba;s/\n/\\n/g')
+          
+          echo "TO_DEPLOY=${CLEANED_DEPLOY_ESCAPED}" >> $GITHUB_ENV
 
       - name: Send commit info to Discord
         run: |
+          # Convert the escaped newlines back to actual newlines for the Discord message
+          CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/\\n/\n/g')
+          
           curl -H "Content-Type: application/json" \
                -X POST \
                -d '{
@@ -39,11 +46,4 @@ jobs:
                    "description": "`${{ github.event.head_commit.message }}`",
                    "color": 16711680,
                    "fields": [
-                     {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
-                     {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "${{ env.TO_DEPLOY }}"},
-                     {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
-                   ]
-                 }]
-               }' \
-               ${{ secrets.DISCORD_WEBHOOK_URL }}
+                     {"name": "Author", "
