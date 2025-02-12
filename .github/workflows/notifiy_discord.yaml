@@ -22,20 +22,31 @@ jobs:
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
 
           echo "Running MDXCanvas and capturing output"
+          # Capture the output of mdxcanvas and save it to a log file
           MDX_OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
                                   ${{ github.workspace }}/scratch/sample-content.canvas.md.xml)
 
-          echo "MDX_OUTPUT=$MDX_OUTPUT" >> $GITHUB_ENV
+          # Save the full output to a log file
+          echo "$MDX_OUTPUT" > mdxcanvas_output.log
 
-          # Extract assignments and quizzes from the output
-          DEPLOYED_ASSIGNMENTS=$(echo "${{ env.MDX_OUTPUT }}" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
-          DEPLOYED_QUIZZES=$(echo "${{ env.MDX_OUTPUT }}" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
+          # Extract relevant INFO-level logs from the output
+          LOG_LINES=$(grep -i "INFO" mdxcanvas_output.log)
 
-          # Handle empty cases
+          # If no logs found, set a default message
+          LOG_LINES=${LOG_LINES:-"No relevant logs found"}
+
+          # Save the logs to the environment variable for use in later steps
+          echo "LOG_LINES=$LOG_LINES" >> $GITHUB_ENV
+
+          # Example for extracting deployed assignments and quizzes (you can adjust this based on your specific output)
+          DEPLOYED_ASSIGNMENTS=$(echo "$MDX_OUTPUT" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
+          DEPLOYED_QUIZZES=$(echo "$MDX_OUTPUT" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
+
+          # Handle empty cases for assignments and quizzes
           DEPLOYED_ASSIGNMENTS=${DEPLOYED_ASSIGNMENTS:-"None"}
           DEPLOYED_QUIZZES=${DEPLOYED_QUIZZES:-"None"}
 
-          # Save to GitHub Environment Variables
+          # Save to GitHub Environment Variables for later use in Discord payload
           echo "DEPLOYED=$DEPLOYED_ASSIGNMENTS" >> $GITHUB_ENV
           echo "QUIZ=$DEPLOYED_QUIZZES" >> $GITHUB_ENV
 
@@ -48,6 +59,7 @@ jobs:
             --arg commit "${{ github.event.head_commit.message }}" \
             --arg deployed "${{ env.DEPLOYED }}" \
             --arg quizzes "${{ env.QUIZ }}" \
+            --arg logs "${{ env.LOG_LINES }}" \
             '{
               "username": "GitHub Actions",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
@@ -59,7 +71,8 @@ jobs:
                   {"name": "Author", "value": "\($author)", "inline": true},
                   {"name": "Branch", "value": "\($branch)", "inline": true},
                   {"name": "Deployed Assignment(s)", "value": "\($deployed)"},
-                  {"name": "Updated Quiz(s)", "value": "\($quizzes)"}
+                  {"name": "Updated Quiz(s)", "value": "\($quizzes)"},
+                  {"name": "Deployment Logs", "value": "\($logs)"}
                 ]
               }]
             }')
