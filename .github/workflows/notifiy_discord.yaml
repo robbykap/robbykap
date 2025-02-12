@@ -11,47 +11,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-name: Run Program on Merge
-
-
-
-on:
-
-  push:
-
-    branches: [main]
-
-  pull_request:
-
-    branches: [main]
-
-    types: [merged]
-
-
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
       - uses: actions/checkout@v3
 
       - run: | 
           # Run the program
-
           echo "Installing MDXCanvas"
-          
           pip install mdxcanvas
-
           echo "Set env var"
-
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-          
           echo "Installed MDXCanvas"
-          
           mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml
 
       - name: Send commit info to Discord
