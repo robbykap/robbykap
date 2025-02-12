@@ -17,9 +17,10 @@ jobs:
         run: pip install mdxcanvas
 
       - name: Run MDXCanvas
-        run: | 
+        run: |
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-              echo "TO_DEPLOY=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun)" >> $GITHUB_ENV
+              TO_DEPLOY=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun)
+              echo "TO_DEPLOY=${TO_DEPLOY}" >> $GITHUB_ENV
 
       - name: Clean up TO_DEPLOY variable
         run: |
@@ -30,7 +31,7 @@ jobs:
         run: |
           # Replacing newline characters with '\\n' so Discord interprets them correctly
           CLEANED_DEPLOY_FORMATTED=$(echo "${{ env.TO_DEPLOY }}" | sed ':a;N;$!ba;s/\n/\\n/g')
-          
+
           curl -H "Content-Type: application/json" \
                -X POST \
                -d '{
