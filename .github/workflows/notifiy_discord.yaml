@@ -22,7 +22,7 @@ jobs:
               echo "TO_DEPLOY"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
 
       - name: Clean up text
-        run: echo "TO_DEPLOY"=$(python ${{ github.workspace }}/.github/scripts/edit_text.py --message "${{ env.TO_DEPLOY }}") >> $GITHUB_ENV
+        run: "TO_DEPLOY"=$(python ${{ github.workspace }}/.github/scripts/edit_text.py --message "${{ env.TO_DEPLOY }}") >> $GITHUB_ENV
 
 
       - name: Send commit info to Discord
