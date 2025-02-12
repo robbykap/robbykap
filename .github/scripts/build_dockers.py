@@ -16,7 +16,7 @@ def find_assignments(files: list[Path]) -> list[Path]:
         file = Path(file)
         # Check if the file is within a solution folder inside an hw folder
         if file.parent.name == 'solution' and file.parent.parent.name not in assignments:
-            assignments.append(file.parent.parent)
+            assignments.add(file.parent.parent)
     return assignments
 
 
