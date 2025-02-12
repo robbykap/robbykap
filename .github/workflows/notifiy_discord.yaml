@@ -17,7 +17,7 @@ jobs:
         run: pip install -U mdxcanvas
 
       - name: Initialize API Token
-        run: export CANVAS_API_TOKEN=${{ secrets.CANVAS_API_TOKEN }}
+        run: export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
 
       - name: Run mdxcanvas
         run: mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml
