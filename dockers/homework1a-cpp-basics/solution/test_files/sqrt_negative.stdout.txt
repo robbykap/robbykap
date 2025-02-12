@@ -1,3 +1,0 @@
-``Input must be greater than 0;answer-1;50``
-
-``Error: The program returned a non-zero exit code: 1;answer-2;50``
