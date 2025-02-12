@@ -7,7 +7,7 @@ docker buildx build \
     --push \
     -f - . <<EOF
 
-FROM byucs235staff/cs235-autograder-base:latest
+FROM byucscourseops/cs235-autograder-base:latest
 
 COPY solution/test_files /autograder/src/test_files/
 COPY solution/run_tests.py /autograder/src/
