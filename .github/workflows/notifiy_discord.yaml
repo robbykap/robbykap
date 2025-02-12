@@ -5,7 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-    types: [closed]
+    types: [merged]
 
 jobs:
   build:
@@ -13,78 +13,34 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install and Run MDXCanvas
+      - name: Install MDXCanvas
+        run: pip install mdxcanvas
+
+      - name: Run MDXCanvas
+        run: export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
+             mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
+                                     ${{ github.workspace }}/scratch/sample-content.canvas.md.xml\
+                       --dry-run
+
+      - name: Send commit info to Discord
         run: |
-          echo "Installing MDXCanvas"
-          pip install mdxcanvas
-          
-          echo "Setting environment variables"
-          export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-
-          echo "Running MDXCanvas and capturing output"
-          # Capture the output of mdxcanvas
-          MDX_OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml 2>&1)
-
-          # Save the full output to a log file
-          echo "$MDX_OUTPUT" > mdxcanvas_output.log
-
-          # Extract relevant INFO-level logs from the output
-          LOG_LINES=$(grep -i "INFO" mdxcanvas_output.log)
-
-          # If no logs found, set a default message
-          LOG_LINES=${LOG_LINES:-"No relevant logs found"}
-
-          # Save the logs to the environment variable for use in later steps
-          echo "LOG_LINES=$LOG_LINES" >> $GITHUB_ENV
-
-          # Example for extracting deployed assignments and quizzes (you can adjust this based on your specific output)
-          DEPLOYED_ASSIGNMENTS=$(echo "$MDX_OUTPUT" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
-          DEPLOYED_QUIZZES=$(echo "$MDX_OUTPUT" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
-
-          # Handle empty cases for assignments and quizzes
-          DEPLOYED_ASSIGNMENTS=${DEPLOYED_ASSIGNMENTS:-"None"}
-          DEPLOYED_QUIZZES=${DEPLOYED_QUIZZES:-"None"}
-
-          # Save to GitHub Environment Variables for later use in Discord payload
-          echo "DEPLOYED=$DEPLOYED_ASSIGNMENTS" >> $GITHUB_ENV
-          echo "QUIZ=$DEPLOYED_QUIZZES" >> $GITHUB_ENV
-
-          # Check the exit status of the mdxcanvas command
-          if [[ $? -ne 0 ]]; then
-            echo "MDXCanvas deployment failed!"
-            exit 1
-          fi
-
-      - name: Send Deployment Info to Discord
-        run: |
-          # Create JSON payload for Discord
-          DISCORD_PAYLOAD=$(jq -n \
-            --arg author "${{ github.event.pusher.name }}" \
-            --arg branch "${{ github.ref }}" \
-            --arg commit "${{ github.event.head_commit.message }}" \
-            --arg deployed "${{ env.DEPLOYED }}" \
-            --arg quizzes "${{ env.QUIZ }}" \
-            --arg logs "${{ env.LOG_LINES }}" \
-            '{
-              "username": "GitHub Actions",
-              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-              "embeds": [{
-                "title": "Canvas Updates",
-                "description": "`\($commit)`",
-                "color": 16711680,
-                "fields": [
-                  {"name": "Author", "value": "\($author)", "inline": true},
-                  {"name": "Branch", "value": "\($branch)", "inline": true},
-                  {"name": "Deployed Assignment(s)", "value": "\($deployed)"},
-                  {"name": "Updated Quiz(s)", "value": "\($quizzes)"},
-                  {"name": "Deployment Logs", "value": "\($logs)"}
-                ]
-              }]
-            }')
-
-          # Send payload to Discord webhook
           curl -H "Content-Type: application/json" \
                -X POST \
-               -d "$DISCORD_PAYLOAD" \
+               -d '{
+                 "username": "GitHub Actions",
+                 "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                 "embeds": [{
+                   "title": "Canvas Updates",
+                   "description": "`${{ github.event.head_commit.message }}`",
+                   "color": 16711680,
+                   "fields": [
+                     {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
+                     {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
+                     {"name": "Deployed Assignment(s)", "value": "${{ env.DEPLOYED }}"},
+                     {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
+                   ]
+                 }]
+               }' \
                ${{ secrets.DISCORD_WEBHOOK_URL }}
+          
+          
