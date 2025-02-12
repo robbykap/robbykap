@@ -19,8 +19,8 @@ jobs:
       - name: Run MDXCanvas
         run: | 
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-              echo "OUTPUT"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
-            
+              echo "TO_DEPLOY"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
+
       - name: Send commit info to Discord
         run: |
           curl -H "Content-Type: application/json" \
@@ -35,7 +35,7 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Deployed Assignment(s)", "value": "${{ env.DEPLOYED }}"},
+                     {"name": "Items to deploy", "value": "${{ env.TO_DEPLOY }}"},
                      {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
