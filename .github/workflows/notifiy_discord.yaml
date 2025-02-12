@@ -21,10 +21,9 @@ jobs:
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
               echo "TO_DEPLOY"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
 
-      - name: Clean up TO_DEPLOY variable
-        run: |
-          echo "TO_DEPLOY"=$(echo "${{ env.TO_DEPLOY }}" | sed -e 's/ - /\\n - /g' -e '$a\\n') >> $GITHUB_ENV
-          echo "TO_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed -e 's/Items to deploy: //g' -e 's/ - /\\n - /g' -e '$a\\n')" >> $GITHUB_ENV
+      - name: Clean up text
+        run: echo ${{env.TO_DEPLOY}}
+
 
       - name: Send commit info to Discord
         run: |
@@ -40,8 +39,8 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "${{ env.TO_DEPLOY }}"},
-                     {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
+                     {"name": "Items Deployed", "value": "${{ env.TO_DEPLOY }}"},
+                     {"name": "Quiz(s) Updated", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
                }' \
