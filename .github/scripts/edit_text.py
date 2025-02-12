@@ -23,4 +23,4 @@ if __name__ == '__main__':
     argparse.add_argument('--message', type=str)
     args = argparse.parse_args()
 
-    main(args.message)
+    print(main(args.message))
