@@ -23,21 +23,8 @@ jobs:
 
       - name: Clean up TO_DEPLOY variable
         run: |
-          # Clean the TO_DEPLOY value, remove "Items to deploy:" and add a newline after each item
           CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/Items to deploy://g' | sed 's/ - / - \n/g')
-          
-          # Escape newlines to preserve them in the environment variable
-          CLEANED_DEPLOY_ESCAPED=$(echo "$CLEANED_DEPLOY" | sed ':a;N;$!ba;s/\n/\\n/g')
-          
-          # Set the cleaned and escaped value back to TO_DEPLOY
-          echo "TO_DEPLOY=${CLEANED_DEPLOY_ESCAPED}" >> $GITHUB_ENV
-          
-          # Convert escaped newlines back to actual newlines for the Discord message
-          CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/\\n/\n/g')
-          
-          # Ensure the result is correctly formatted for Discord
-          FINAL_DEPLOY=$(echo "$CLEANED_DEPLOY" | sed 's/ - / - /g')
-          echo "TO_DEPLOY=${FINAL_DEPLOY}" >> $GITHUB_ENV
+          echo "TO_DEPLOY=${CLEANED_DEPLOY}" >> $GITHUB_ENV
 
       - name: Send commit info to Discord
         run: |
