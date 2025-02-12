@@ -21,15 +21,15 @@ jobs:
           echo "Setting environment variables"
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
 
-          echo "Running MDXCanvas and logging output"
-          mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                    ${{ github.workspace }}/scratch/sample-content.canvas.md.xml | tee ${{ github.workspace }}/.github/logs/mdxcanvas.log
+          echo "Running MDXCanvas and capturing output"
+          MDX_OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
+                                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml)
 
-      - name: Extract Deployed Items
-        run: |
-          # Extract assignments and quizzes from the log file
-          DEPLOYED_ASSIGNMENTS=$(grep "Deploying assignment" ${{ github.workspace }}/.github/logs/mdxcanvas.log | awk -F 'Deploying ' '{print $2}' | paste -sd ', ' -)
-          DEPLOYED_QUIZZES=$(grep "Deploying quiz" ${{ github.workspace }}/.github/logs/mdxcanvas.log | awk -F 'Deploying ' '{print $2}' | paste -sd ', ' -)
+          echo "$MDX_OUTPUT"
+
+          # Extract assignments and quizzes from the output
+          DEPLOYED_ASSIGNMENTS=$(echo "$MDX_OUTPUT" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
+          DEPLOYED_QUIZZES=$(echo "$MDX_OUTPUT" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
 
           # Handle empty cases
           DEPLOYED_ASSIGNMENTS=${DEPLOYED_ASSIGNMENTS:-"None"}
