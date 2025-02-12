@@ -1,5 +1,5 @@
 IMAGE_NAME="byucs235staff/cs235-hw-1a"
-IMAGE_TAG="winter2025"
+IMAGE_TAG="winter2025-test-image"
 
 docker buildx build \
     --platform linux/amd64,linux/arm64 \
@@ -14,4 +14,4 @@ COPY solution/run_tests.py /autograder/src/
 
 EOF
 
-docker pull ${IMAGE_NAME}:${IMAGE_TAG}
+# docker pull ${IMAGE_NAME}:${IMAGE_TAG}
