@@ -43,7 +43,7 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "${{ CLEANED_DEPLOY_FORMATTED }}"},
+                     {"name": "Items to deploy", "value": "${ CLEANED_DEPLOY_FORMATTED }"},
                      {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
