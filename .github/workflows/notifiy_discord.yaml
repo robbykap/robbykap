@@ -25,11 +25,11 @@ jobs:
           MDX_OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
                                   ${{ github.workspace }}/scratch/sample-content.canvas.md.xml)
 
-          echo "$MDX_OUTPUT"
+          echo "MDX_OUTPUT=$MDX_OUTPUT" >> $GITHUB_ENV
 
           # Extract assignments and quizzes from the output
-          DEPLOYED_ASSIGNMENTS=$(echo "$MDX_OUTPUT" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
-          DEPLOYED_QUIZZES=$(echo "$MDX_OUTPUT" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
+          DEPLOYED_ASSIGNMENTS=$(echo "${{ env.MDX_OUTPUT }}" | grep "Deploying assignment" | awk -F 'Deploying assignment ' '{print $2}' | paste -sd ', ' -)
+          DEPLOYED_QUIZZES=$(echo "${{ env.MDX_OUTPUT }}" | grep "Deploying quiz" | awk -F 'Deploying quiz ' '{print $2}' | paste -sd ', ' -)
 
           # Handle empty cases
           DEPLOYED_ASSIGNMENTS=${DEPLOYED_ASSIGNMENTS:-"None"}
