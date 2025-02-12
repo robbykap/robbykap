@@ -28,7 +28,7 @@ jobs:
       - name: Send commit info to Discord
         run: |
           # Replacing newline characters with '\\n' so Discord interprets them correctly
-          CLEANED_DEPLOY_FORMATTED=$(echo "${{ env.TO_DEPLOY }}" | sed ':a;N;$!ba;s/\n/\\n/g')
+          echo "CLEANED_DEPLOY_FORMATTED"=$(echo "${{ env.TO_DEPLOY }}" | sed ':a;N;$!ba;s/\n/\\n/g') >> $GITHUB_ENV
 
           curl -H "Content-Type: application/json" \
                -X POST \
@@ -42,7 +42,7 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "'"${CLEANED_DEPLOY_FORMATTED}"'"},
+                     {"name": "Items to deploy", "value": "${{ env.CLEANED_DEPLOY_FORMATTED }}"},
                      {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
