@@ -18,9 +18,7 @@ jobs:
 
       - name: Run MDXCanvas
         run: export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-             mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                                     ${{ github.workspace }}/scratch/sample-content.canvas.md.xml\
-                       --dry-run
+             mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun
 
       - name: Send commit info to Discord
         run: |
