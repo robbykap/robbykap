@@ -11,11 +11,11 @@ def find_build_docker_scripts(dir: Path):
 
 
 def find_assignments(files: list[Path]) -> list[Path]:
-    assignments = []
+    assignments = set()
     for file in files:
         file = Path(file)
         # Check if the file is within a solution folder inside an hw folder
-        if file.parent.name == 'solution':
+        if file.parent.name == 'solution' and file.parent.parent.name not in assignments:
             assignments.append(file.parent.parent)
     return assignments
 
