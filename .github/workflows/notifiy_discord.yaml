@@ -1,0 +1,26 @@
+name: Notify Discord on Push
+
+on: push
+
+jobs:
+  discord_notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send commit info to Discord
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "username": "GitHub Actions",
+                 "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                 "embeds": [{
+                   "title": "New Commit in ${{ github.repository }}",
+                   "description": "`${{ github.event.head_commit.message }}`",
+                   "color": 16711680,
+                   "fields": [
+                     {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
+                     {"name": "Branch", "value": "${{ github.ref }}", "inline": true}
+                   ]
+                 }]
+               }' \
+               ${{ secrets.DISCORD_WEBHOOK_URL }}
