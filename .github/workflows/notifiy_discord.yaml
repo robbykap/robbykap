@@ -31,15 +31,16 @@ jobs:
           
           # Set the cleaned and escaped value back to TO_DEPLOY
           echo "TO_DEPLOY=${CLEANED_DEPLOY_ESCAPED}" >> $GITHUB_ENV
-
-      - name: Send commit info to Discord
-        run: |
+          
           # Convert escaped newlines back to actual newlines for the Discord message
           CLEANED_DEPLOY=$(echo "${{ env.TO_DEPLOY }}" | sed 's/\\n/\n/g')
           
           # Ensure the result is correctly formatted for Discord
           FINAL_DEPLOY=$(echo "$CLEANED_DEPLOY" | sed 's/ - / - /g')
-          echo "FINAL_DEPLOY=${FINAL_DEPLOY}" >> $GITHUB_ENV
+          echo "TO_DEPLOY=${FINAL_DEPLOY}" >> $GITHUB_ENV
+
+      - name: Send commit info to Discord
+        run: |
           
           curl -H "Content-Type: application/json" \
                -X POST \
@@ -53,7 +54,7 @@ jobs:
                    "fields": [
                      {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
                      {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items to deploy", "value": "${{ env.FINAL_DEPLOY }}"},
+                     {"name": "Items to deploy", "value": "${{ env.TO_DEPLOY }}"},
                      {"name": "Updated Quiz(s)", "value": "${{ env.QUIZ }}"}
                    ]
                  }]
