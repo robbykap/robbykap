@@ -20,8 +20,11 @@ jobs:
       - name: Get changes
         run: |
             files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
-            echo "Changed files: ${files}"
-            echo "FILES=${files}" >> $GITHUB_ENV
+            {
+              echo "FILES<<EOF"
+              echo "${files}"
+              echo "EOF"
+            } >> $GITHUB_ENV
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
