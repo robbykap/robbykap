@@ -24,7 +24,6 @@ jobs:
       - name: Clean up TO_DEPLOY variable
         run: |
           echo "TO_DEPLOY"=$(echo "${{ env.TO_DEPLOY }}" | sed -e 's/Items to deploy: //g' -e 's/ - /\n/g') >> $GITHUB_ENV
-          echo "TO_DEPLOY"=$(echo "${{ env.TO_DEPLOY }}" | sed ':a;N;$!ba;s/\n/\\n/g') >> $GITHUB_ENV
 
       - name: Send commit info to Discord
         run: |
