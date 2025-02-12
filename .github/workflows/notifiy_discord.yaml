@@ -22,9 +22,9 @@ jobs:
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
 
           echo "Running MDXCanvas and capturing output"
-          # Capture the output of mdxcanvas and save it to a log file
+          # Capture the output of mdxcanvas
           MDX_OUTPUT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml)
+                                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml 2>&1)
 
           # Save the full output to a log file
           echo "$MDX_OUTPUT" > mdxcanvas_output.log
@@ -49,6 +49,12 @@ jobs:
           # Save to GitHub Environment Variables for later use in Discord payload
           echo "DEPLOYED=$DEPLOYED_ASSIGNMENTS" >> $GITHUB_ENV
           echo "QUIZ=$DEPLOYED_QUIZZES" >> $GITHUB_ENV
+
+          # Check the exit status of the mdxcanvas command
+          if [[ $? -ne 0 ]]; then
+            echo "MDXCanvas deployment failed!"
+            exit 1
+          fi
 
       - name: Send Deployment Info to Discord
         run: |
