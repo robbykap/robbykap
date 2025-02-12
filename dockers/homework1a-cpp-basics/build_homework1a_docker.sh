@@ -1,5 +1,5 @@
 IMAGE_NAME="byucscourseops/cs235-hw-1a"
-IMAGE_TAG="winter2025-test-image"
+IMAGE_TAG="winter2025-test-image-2"
 
 docker buildx build \
     --platform linux/amd64,linux/arm64 \
