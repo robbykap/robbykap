@@ -7,15 +7,6 @@ import requests
 from argparse import ArgumentParser
 
 
-def clean_message(message: str) -> list[str]:
-    cleaned_message = []
-    for line in message.split('\n'):
-        if 'INFO' in line:
-            continue
-        cleaned_message.append(line)
-    return cleaned_message
-
-
 def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
     deployed_files = []
     quizzes_to_update = []
@@ -23,16 +14,19 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
     to_deploy = False
     update_quiz = False
 
-    for line in message:
+    for line in message.split():
         line = line.strip()
+
+        if 'INFO' in line:
+            continue
 
         if line == 'Items to deploy:':
             to_deploy = True
             continue
 
         if 'WARNING' in line:
+            to_deploy = False
             update_quiz = True
-            continue
 
         if to_deploy:
             rtype, title = line.strip('-').strip().split(' ', 1)
@@ -95,7 +89,6 @@ def send_request(
 
 
 def main(message: str, author: str, author_icon:str, branch: str):
-    message = clean_message(message)
     deployed_files, quizzes_to_update = parse_message(message)
     send_request(author, author_icon, branch, deployed_files, quizzes_to_update)
 
