@@ -6,22 +6,43 @@ from datetime import datetime
 import requests
 from argparse import ArgumentParser
 
-def parse_message(message:str) -> tuple[list[str], list[str]]:
-    # deployed_files = []
-    # for line in to_deploy.strip().split('-'):
-    #     if line:
-    #         line = line.strip()
-    #         rtype, title = line.split(' ', 1)
-    #         deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
-    #
-    # quizzes_to_update = []
-    # for line in update.strip():
-    #     if line:
-    #         line = line.strip()
-    #         title, link = line.split(':', 1)
-    #         quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
 
-    return [line for line in message.split('\n')], []
+def clean_message(message: str) -> list[str]:
+    cleaned_message = []
+    for line in message.split('\n'):
+        if 'INFO' in line:
+            continue
+        cleaned_message.append(line)
+    return cleaned_message
+
+
+def parse_message(message:list[str]) -> tuple[list[str], list[str]]:
+    deployed_files = []
+    quizzes_to_update = []
+
+    to_deploy = False
+    update_quiz = False
+
+    for line in message:
+        line = line.strip()
+
+        if line == 'Canvas Items to deploy:':
+            to_deploy = True
+            continue
+
+        if 'WARNING' in line:
+            update_quiz = True
+            continue
+
+        if to_deploy:
+            rtype, title = line.split(' ', 1)
+            deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
+
+        if update_quiz:
+            title, link = line.split(':', 1)
+            quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
+
+    return deployed_files, quizzes_to_update
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
