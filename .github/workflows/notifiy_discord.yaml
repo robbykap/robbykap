@@ -28,9 +28,9 @@ jobs:
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
               mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun
 
-      - name: Store Ouput
-        run: echo "MDXCANVAS_RESULT=${{steps.run_mdxcanvas.outputs.*}}" >> $GITHUB_ENV
-
+      - name: Store Output
+        run: echo "MDXCANVAS_RESULT=${{ steps.run_mdxcanvas.outputs.result }}" >> $GITHUB_ENV
+        
       - name: Send notification to Discord
         run: |
               export TEST_CANVAS_DISCORD_WEBHOOK=${{ secrets.DISCORD_WEBHOOK_URL }}
