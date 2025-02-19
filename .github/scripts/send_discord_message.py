@@ -7,29 +7,21 @@ import requests
 from argparse import ArgumentParser
 
 def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
-    deployed_files = []
-    for line in to_deploy.strip().split('-'):
-        if line:
-            line = line.strip()
-            rtype, title = line.split(' ', 1)
-            deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
+    # deployed_files = []
+    # for line in to_deploy.strip().split('-'):
+    #     if line:
+    #         line = line.strip()
+    #         rtype, title = line.split(' ', 1)
+    #         deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
+    #
+    # quizzes_to_update = []
+    # for line in update.strip():
+    #     if line:
+    #         line = line.strip()
+    #         title, link = line.split(':', 1)
+    #         quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
 
-    quizzes_to_update = []
-    for line in update.strip():
-        if line:
-            line = line.strip()
-            title, link = line.split(':', 1)
-            quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
-
-    return deployed_files, quizzes_to_update
-
-
-def get_info(message: str) -> tuple[list[str], list[str]]:
-    to_deploy = []
-    for line in message.strip().split('\n'):
-        if line:
-            to_deploy.append(line.strip())
-    return parse_message('-'.join(to_deploy), '')
+    return [line for line in to_deploy.split('\n')], []
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
@@ -82,7 +74,7 @@ def send_request(
 
 
 def main(message: str, author: str, author_icon:str, branch: str):
-    deployed_files, quizzes_to_update = get_info(message)
+    deployed_files, quizzes_to_update = parse_message(message)
     send_request(author, author_icon, branch, deployed_files, quizzes_to_update)
 
 
