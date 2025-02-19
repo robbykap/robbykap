@@ -26,7 +26,7 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
     for line in message:
         line = line.strip()
 
-        if line == 'Canvas Items to deploy:':
+        if line == 'Items to deploy:':
             to_deploy = True
             continue
 
@@ -42,7 +42,7 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
             title, link = line.split(':', 1)
             quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
 
-    return [line for line in message], []
+    return deployed_files, quizzes_to_update
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
