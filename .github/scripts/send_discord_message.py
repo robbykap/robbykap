@@ -6,14 +6,6 @@ from datetime import datetime
 import requests
 from argparse import ArgumentParser
 
-TO_REMOVE = ["Items to deploy:"]
-
-def clean_message(message: str) -> list[str]:
-    message = message.strip()
-    message = message.replace("Items to deploy:", '')
-    return message.split("The following quizzes need to be updated:")
-
-
 def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
     deployed_files = []
     for line in to_deploy.strip().split('-'):
@@ -23,7 +15,7 @@ def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
             deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
 
     quizzes_to_update = []
-    for line in update.strip().split('-'):
+    for line in update.strip():
         if line:
             line = line.strip()
             title, link = line.split(':', 1)
@@ -33,8 +25,11 @@ def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
 
 
 def get_info(message: str) -> tuple[list[str], list[str]]:
-    to_deploy, update = clean_message(message)
-    return parse_message(to_deploy, update)
+    to_deploy = []
+    for line in message.strip().split('\n'):
+        if line:
+            to_deploy.append(line.strip())
+    return parse_message('-'.join(to_deploy), '')
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
