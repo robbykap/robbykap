@@ -35,7 +35,7 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
             continue
 
         if to_deploy:
-            rtype, title = line.split(' ', 1)
+            rtype, title = line.strip('-').strip().split(' ', 1)
             deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
 
         if update_quiz:
