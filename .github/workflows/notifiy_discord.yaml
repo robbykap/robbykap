@@ -29,7 +29,7 @@ jobs:
               mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun
 
       - name: Store Ouput
-        run: echo "MDXCANVAS_RESULT=${{steps.run_mdxcanvas.outputs.out}}" >> $GITHUB_ENV
+        run: echo "MDXCANVAS_RESULT=${{steps.run_mdxcanvas.outputs.*}}" >> $GITHUB_ENV
 
       - name: Send notification to Discord
         run: |
