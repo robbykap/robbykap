@@ -1,57 +1,53 @@
 import json
 import os
 import re
-
 from datetime import datetime
-
 import requests
 from argparse import ArgumentParser
 
 
-import re
-from typing import List, Tuple
-
 def extract_deployed_files(line: str) -> str:
     """
-    Parses a deployed line and formats it.
+    Parses a deployment log line and formats it into a readable output.
+
+    Examples:
+        - "2025-02-19 20:30:01,805 - INFO - Deploying quiz Example Quiz"
+          → "- **QUIZ:** Example Quiz"
+
+    Ignores:
+        - "2025-02-19 20:29:55,555 - INFO - Deploying to Canvas"
     """
-    rtype, title = line.strip('-').strip().split(' ', 1)
-    return f"- **{rtype.strip()}:** {title.strip()}"
+    match = re.search(r"Deploying (?!to Canvas)(\w+) (.+)", line)
+    return f"- **{match.group(1).upper().strip()}:** {match.group(2).strip()}" if match else ""
 
 
 def extract_quizzes_to_update(line: str) -> str:
     """
     Extracts quiz name and link from a warning message.
+
+    Examples:
+        - "2025-02-19 20:17:37,227 - WARNING - Quiz Example Quiz has submissions.
+           See https://byu.instructure.com/courses/20736/quizzes/511429 to save quiz."
+          → "- **Example Quiz:** https://byu.instructure.com/courses/20736/quizzes/511429"
     """
     match = re.search(r"Quiz (.+?) has submissions\. See (https://\S+) to save quiz\.", line)
-    if match:
-        title, link = match.groups()
-        return f"- **{title}:** {link}"
-    return ""
+    return f"- **{match.group(1).strip()}:** {match.group(2).strip()}" if match else ""
 
-def parse_message(message: str) -> Tuple[List[str], List[str]]:
+
+def parse_message(message: str) -> tuple[list[str], list[str]]:
     """
     Parses a log message to extract deployed files and quizzes that need updating.
     """
     deployed_files = []
     quizzes_to_update = []
-    to_deploy = False
 
     for line in message.split('\n'):
         line = line.strip()
 
-        if 'INFO' in line:  # Skip INFO log lines
-            continue
-
-        if line == 'Items to deploy:':  # Start of deployed files section
-            to_deploy = True
-            continue
-
-        if 'WARNING' in line:  # Start of quizzes to update section
-            to_deploy = False
-
-        if to_deploy and line.startswith('-'):
-            deployed_files.append(extract_deployed_files(line))
+        if 'Deploying' in line:
+            deploy_entry = extract_deployed_files(line)
+            if deploy_entry:
+                deployed_files.append(deploy_entry)
 
         elif 'WARNING' in line:
             quiz_entry = extract_quizzes_to_update(line)
@@ -59,7 +55,6 @@ def parse_message(message: str) -> Tuple[List[str], List[str]]:
                 quizzes_to_update.append(quiz_entry)
 
     return deployed_files, quizzes_to_update
-
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
