@@ -18,8 +18,14 @@ jobs:
 
       - name: Run MDXCanvas
         run: |
-              export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-              echo "Avatar URL: ${{ github.actor }}@avatar" 
+          USERNAME="${{ github.actor }}"  # Replace with the actual GitHub username or set it as an input
+          AVATAR_URL=$(curl -s https://api.github.com/users/$USERNAME | jq -r '.avatar_url')
+          echo "Avatar URL: $AVATAR_URL"
+          echo "AVATAR_URL=$AVATAR_URL" >> $GITHUB_ENV  # Save for later steps
+
+      - name: Display Avatar URL
+        run: |
+              echo "The avatar URL is: $AVATAR_URL"
 
       - name: Send notification to Discord
         run: |
