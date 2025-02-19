@@ -14,7 +14,7 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
     to_deploy = False
     update_quiz = False
 
-    for line in message.split():
+    for line in message.split('\n'):
         line = line.strip()
 
         if 'INFO' in line:
