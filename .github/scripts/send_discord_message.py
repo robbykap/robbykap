@@ -18,7 +18,7 @@ def extract_deployed_files(line: str) -> str:
         - "2025-02-19 20:29:55,555 - INFO - Deploying to Canvas"
     """
     match = re.search(r"Deploying (?!to Canvas)(\w+) (.+)", line)
-    return f"- **{match.group(1).upper().strip()}:** {match.group(2).strip()}" if match else ""
+    return f"- **{match.group(1).capitalize().strip()}:** {match.group(2).strip()}" if match else ""
 
 
 def extract_quizzes_to_update(line: str) -> str:
