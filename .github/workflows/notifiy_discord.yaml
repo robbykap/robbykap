@@ -26,11 +26,11 @@ jobs:
         id: run_mdxcanvas
         run: |
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-          RESULT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun 2>&1)
-          echo "$RESULT"
+          mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
+                    ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun 2>&1 | tee mdxcanvas_output.log
+
           echo "MDXCANVAS_RESULT<<EOF" >> $GITHUB_ENV
-          echo "$RESULT" >> $GITHUB_ENV
+          cat mdxcanvas_output.log >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
       - name: Send notification to Discord
