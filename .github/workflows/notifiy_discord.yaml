@@ -19,29 +19,9 @@ jobs:
       - name: Run MDXCanvas
         run: |
               export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
-              echo "TO_DEPLOY"=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun) >> $GITHUB_ENV
+              echo "Avatar URL: ${{ github.actor }}@avatar" 
 
-      - name: Clean up text
-        run: "TO_DEPLOY"=$(python ${{ github.workspace }}/.github/scripts/edit_text.py --message "${{ env.TO_DEPLOY }}") >> $GITHUB_ENV
-
-
-      - name: Send commit info to Discord
+      - name: Send notification to Discord
         run: |
-          curl -H "Content-Type: application/json" \
-               -X POST \
-               -d '{
-                 "username": "GitHub Actions",
-                 "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                 "embeds": [{
-                   "title": "Canvas Updates",
-                   "description": "`${{ github.event.head_commit.message }}`",
-                   "color": 16711680,
-                   "fields": [
-                     {"name": "Author", "value": "${{ github.event.pusher.name }}", "inline": true},
-                     {"name": "Branch", "value": "${{ github.ref }}", "inline": true},
-                     {"name": "Items Deployed", "value": "${{ env.TO_DEPLOY }}"},
-                     {"name": "Quiz(s) Updated", "value": "${{ env.QUIZ }}"}
-                   ]
-                 }]
-               }' \
-               ${{ secrets.DISCORD_WEBHOOK_URL }}
+              export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
+              python ${{ github.workspace }}/.github/scripts/send_discord_message.py --description "${{ github.event.head_commit.message }}" --message "${{ env.MESSAGE }} --author "${{ github.event.pusher.name }}" --author-icon "${{ github.actor }}@avatar" --branch "${{ github.ref }}""
