@@ -27,7 +27,7 @@ jobs:
         run: |
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
           mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                    ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun 2>&1 | tee mdxcanvas_output.log
+                    ${{ github.workspace }}/scratch/sample-content.canvas.md.xml 2>&1 | tee mdxcanvas_output.log
 
           echo "MDXCANVAS_RESULT<<EOF" >> $GITHUB_ENV
           cat mdxcanvas_output.log >> $GITHUB_ENV

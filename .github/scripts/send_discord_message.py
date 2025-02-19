@@ -7,7 +7,7 @@ import requests
 from argparse import ArgumentParser
 
 
-def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
+def parse_message(message: str) -> tuple[list[str], list[str]]:
     deployed_files = []
     quizzes_to_update = []
 
@@ -17,13 +17,16 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
     for line in message.split('\n'):
         line = line.strip()
 
+        # Skip logger INFO lines
         if 'INFO' in line:
             continue
 
+        # Check if we are at the start of the items to deploy
         if line == 'Items to deploy:':
             to_deploy = True
             continue
 
+        # Check if we are at the start of the quizzes to update
         if 'WARNING' in line:
             to_deploy = False
             update_quiz = True
@@ -32,7 +35,7 @@ def parse_message(message: list[str]) -> tuple[list[str], list[str]]:
             rtype, title = line.strip('-').strip().split(' ', 1)
             deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
 
-        if update_quiz:
+        elif update_quiz:
             title, link = line.split(':', 1)
             quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
 
@@ -44,9 +47,10 @@ def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[
 
     if deployed_files:
         fields.append({"name": "Item(s) deployed", "value": '\n'.join(deployed_files), "inline": True})
-        fields.append({"name": "\u200b", "value": "\u200b", "inline": True})
 
     if quizzes_to_update:
+        if deployed_files:  # Add spacing only if both sections exist
+            fields.append({"name": "\u200b", "value": "\u200b", "inline": True})
         fields.append({"name": "Updated Quiz(s)", "value": '\n'.join(quizzes_to_update), "inline": True})
 
     fields.append({"name": "\u200b", "value": "\u200b", "inline": False})
@@ -90,6 +94,8 @@ def send_request(
 
 def main(message: str, author: str, author_icon:str, branch: str):
     deployed_files, quizzes_to_update = parse_message(message)
+    if not deployed_files and not quizzes_to_update:
+        return
     send_request(author, author_icon, branch, deployed_files, quizzes_to_update)
 
 
