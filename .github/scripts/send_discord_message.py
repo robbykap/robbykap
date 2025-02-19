@@ -8,40 +8,58 @@ import requests
 from argparse import ArgumentParser
 
 
-def parse_message(message: str) -> tuple[list[str], list[str]]:
+import re
+from typing import List, Tuple
+
+def extract_deployed_files(line: str) -> str:
+    """
+    Parses a deployed line and formats it.
+    """
+    rtype, title = line.strip('-').strip().split(' ', 1)
+    return f"- **{rtype.strip()}:** {title.strip()}"
+
+
+def extract_quizzes_to_update(line: str) -> str:
+    """
+    Extracts quiz name and link from a warning message.
+    """
+    match = re.search(r"Quiz (.+?) has submissions\. See (https://\S+) to save quiz\.", line)
+    if match:
+        title, link = match.groups()
+        return f"- **{title}:** {link}"
+    return ""
+
+def parse_message(message: str) -> Tuple[List[str], List[str]]:
+    """
+    Parses a log message to extract deployed files and quizzes that need updating.
+    """
     deployed_files = []
     quizzes_to_update = []
-
     to_deploy = False
-    update_quiz = False
 
     for line in message.split('\n'):
         line = line.strip()
 
-        # Skip logger INFO lines
-        if 'INFO' in line:
+        if 'INFO' in line:  # Skip INFO log lines
             continue
 
-        # Check if we are at the start of the items to deploy
-        if line == 'Items to deploy:':
+        if line == 'Items to deploy:':  # Start of deployed files section
             to_deploy = True
             continue
 
-        # Check if we are at the start of the quizzes to update
-        if 'WARNING' in line:
+        if 'WARNING' in line:  # Start of quizzes to update section
             to_deploy = False
-            update_quiz = True
 
-        if to_deploy:
-            rtype, title = line.strip('-').strip().split(' ', 1)
-            deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
+        if to_deploy and line.startswith('-'):
+            deployed_files.append(extract_deployed_files(line))
 
-        elif update_quiz:
-            line = re.search(r"Quiz (.+?) has submissions\. See (https://\S+) to save quiz\.", line)
-            title, link = line.groups()
-            quizzes_to_update.append(f"- **{title}:** {link}")
+        elif 'WARNING' in line:
+            quiz_entry = extract_quizzes_to_update(line)
+            if quiz_entry:
+                quizzes_to_update.append(quiz_entry)
 
     return deployed_files, quizzes_to_update
+
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
@@ -109,6 +127,6 @@ if __name__ == '__main__':
     parser.add_argument('--branch', required=True)
     args = parser.parse_args()
 
-    WEBOOK_URL = os.getenv('TEST_CANVAS_DISCORD_WEBHOOK')
+    WEBOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
 
     main(args.message, args.author, args.author_icon, args.branch)
