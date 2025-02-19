@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from argparse import ArgumentParser
 
-def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
+def parse_message(message:str) -> tuple[list[str], list[str]]:
     # deployed_files = []
     # for line in to_deploy.strip().split('-'):
     #     if line:
@@ -21,7 +21,7 @@ def parse_message(to_deploy:str, update: str) -> tuple[list[str], list[str]]:
     #         title, link = line.split(':', 1)
     #         quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
 
-    return [line for line in to_deploy.split('\n')], []
+    return [line for line in message.split('\n')], []
 
 
 def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
