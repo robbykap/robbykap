@@ -34,12 +34,12 @@ def extract_quizzes_to_update(line: str) -> str:
     return f"- **{match.group(1).strip()}:** {match.group(2).strip()}" if match else ""
 
 
-def parse_message(message: str) -> tuple[list[str], list[str]]:
+def parse_message(message: str) -> tuple[set[str], set[str]]:
     """
     Parses a log message to extract deployed files and quizzes that need updating.
     """
-    deployed_files = []
-    quizzes_to_update = []
+    deployed_files = set()
+    quizzes_to_update = set()
 
     for line in message.split('\n'):
         line = line.strip()
@@ -47,17 +47,17 @@ def parse_message(message: str) -> tuple[list[str], list[str]]:
         if 'Deploying' in line:
             deploy_entry = extract_deployed_files(line)
             if deploy_entry:
-                deployed_files.append(deploy_entry)
+                deployed_files.add(deploy_entry)
 
         elif 'WARNING' in line:
             quiz_entry = extract_quizzes_to_update(line)
             if quiz_entry:
-                quizzes_to_update.append(quiz_entry)
+                quizzes_to_update.add(quiz_entry)
 
     return deployed_files, quizzes_to_update
 
 
-def get_fields(deployed_files: list[str], quizzes_to_update: list[str]) -> list[dict]:
+def get_fields(deployed_files: set[str], quizzes_to_update: set[str]) -> list[dict]:
     fields = [{"name": "\u200b", "value": "\u200b", "inline": False}]
 
     if deployed_files:

@@ -38,7 +38,7 @@
         points_possible="10"
         assignment_group="Examples"
     >
-        Do this stuff. Yesterday. :) edit
+        Do this stuff. Yesterday. :)
     </assignment>
 
     <assignment
@@ -67,7 +67,7 @@
             title="Example Quiz"
     >
         <description>
-            This is an **example** quiz!
+            This is an **example** quiz! edit
 
             You should read
             <course-link type="page" title="Example Page"/>
