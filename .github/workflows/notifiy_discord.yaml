@@ -27,7 +27,7 @@ jobs:
         run: |
           export CANVAS_API_TOKEN=${{ secrets.DEPLOY_KEY }}
           RESULT=$(mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
-                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun)
+                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml --dryrun 2>&1)
           echo "$RESULT"
           echo "MDXCANVAS_RESULT<<EOF" >> $GITHUB_ENV
           echo "$RESULT" >> $GITHUB_ENV
@@ -37,7 +37,6 @@ jobs:
         run: |
           export TEST_CANVAS_DISCORD_WEBHOOK=${{ secrets.DISCORD_WEBHOOK_URL }}
           python ${{ github.workspace }}/.github/scripts/send_discord_message.py \
-            --description "${{ github.event.head_commit.message }}" \
             --message "$MDXCANVAS_RESULT" \
             --author "${{ github.actor }}" \
             --author-icon "$AVATAR_URL" \
