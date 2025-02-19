@@ -95,6 +95,7 @@ def send_request(
 
 
 def main(message: str, author: str, author_icon:str, branch: str):
+    message = clean_message(message)
     deployed_files, quizzes_to_update = parse_message(message)
     send_request(author, author_icon, branch, deployed_files, quizzes_to_update)
 
