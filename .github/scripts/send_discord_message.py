@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 from datetime import datetime
 
@@ -36,8 +37,9 @@ def parse_message(message: str) -> tuple[list[str], list[str]]:
             deployed_files.append(f"- **{rtype.strip()}:** {title.strip()}")
 
         elif update_quiz:
-            title, link = line.split(':', 1)
-            quizzes_to_update.append(f"- **{title.strip()}:** {link.strip()}")
+            line = re.search(r"Quiz (.+?) has submissions\. See (https://\S+) to save quiz\.", line)
+            title, link = line.groups()
+            quizzes_to_update.append(f"- **{title}:** {link}")
 
     return deployed_files, quizzes_to_update
 
