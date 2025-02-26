@@ -1,0 +1,18 @@
+{
+    "deployed_content": {
+        "page": [
+            "Example Page"
+        ],
+        "quiz": [
+            "Example Quiz"
+        ]
+    },
+    "content_to_review": [
+        [
+            "Example Quiz",
+            "https://byu.instructure.com/courses/20736/quizzes/511429"
+        ]
+    ],
+    "message": "Successfully deployed the following content and the following content needs to be reviewed...",
+    "status": "success"
+}
