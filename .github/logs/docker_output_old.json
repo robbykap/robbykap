@@ -1,9 +1,7 @@
 {
-    "updated_images": [
-        "build_test_docker.sh"
-    ],
+    "updated_images": [],
     "failed_images": [],
-    "message": "Successfully built all docker images.",
+    "message": "",
     "status": "success",
     "error": [],
     "updated": false
