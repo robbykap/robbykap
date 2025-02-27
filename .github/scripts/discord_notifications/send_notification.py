@@ -45,7 +45,7 @@ def get_notification(
     }
 
 
-def main(dtype: str, payload_path: str, author: str, author_icon: str, branch: str):
+def main(dtype: str, notification_info_path: str, payload_path: str, author: str, author_icon: str, branch: str):
     """Main function for sending notifications."""
 
     # Load the payload
@@ -53,7 +53,7 @@ def main(dtype: str, payload_path: str, author: str, author_icon: str, branch: s
         payload = json.load(f)
 
     # Get notification information specific to the type of notification
-    notification_info = get_info(dtype)
+    notification_info = get_info(dtype, notification_info_path)
 
     # Build notification fields
     fields = get_fields(dtype, payload)
@@ -85,6 +85,7 @@ def main(dtype: str, payload_path: str, author: str, author_icon: str, branch: s
 if __name__ == "__main__":
     parser = ArgumentParser(description="Send Canvas or Gradescope notifications to Discord.")
     parser.add_argument("--type", required=True, choices=["canvas", "gradescope"], help="Type of notification")
+    parser.add_argument("--notification-info", required=True, help="Path to the notification info JSON file")
     parser.add_argument("--payload", required=True, help="Path to the payload JSON file")
     parser.add_argument("--author", required=True, help="Name of the author")
     parser.add_argument("--author-icon", required=True, help="URL of the author's icon")
@@ -92,4 +93,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args.type, args.payload, args.author, args.author_icon, args.branch)
+    main(args.type, args.notification_info, args.payload, args.author, args.author_icon, args.branch)

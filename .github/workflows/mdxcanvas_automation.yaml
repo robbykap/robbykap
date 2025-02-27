@@ -35,6 +35,7 @@ jobs:
           export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
           python ${{ github.workspace }}/.github/scripts/discord_notifications/send_notification.py \
             --type "canvas" \
+            --notification-info ${{ github.workspace }}/.github/scripts/discord_notifications/notification_info.md \
             --payload "${{ github.workspace }}/.github/logs/mdxcanvas_output.json" \
             --author "${{ github.actor }}" \
             --author-icon "$AVATAR_URL" \

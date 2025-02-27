@@ -64,7 +64,7 @@ def _read_md_tables(md_text):
     }
 
 
-def get_info(dtype: str, path='notification_info.md'):
+def get_info(dtype: str, path: str):
     """Reads Markdown file and extracts structured data for a specific dtype."""
     with open(path, 'r', encoding='utf-8') as f:
         md_text = f.read()
