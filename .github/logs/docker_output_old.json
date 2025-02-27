@@ -1,10 +1,12 @@
 {
-    "updated_images": [
+    "updated_images": [],
+    "failed_images": [
         "build_test_docker.sh"
     ],
-    "failed_images": [],
-    "message": "Successfully built all docker images.",
-    "status": "success",
-    "error": [],
+    "message": "Failed to build one ore more docker images.\nSee https://github.com/BYU-CS-Course-Ops/CS235-course-content/tree/main/.github/logs/docker_output.json for more details",
+    "status": "failure",
+    "error": [
+        "#0 building with \"builder-4246f6a4-57be-4ed5-9554-4f9846ba4a93\" instance using docker-container driver\n\n#1 [internal] load build definition from Dockerfile\n#1 transferring dockerfile: 198B done\n#1 DONE 0.0s\n\n#2 [linux/arm64 internal] load metadata for docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit\n#2 ...\n\n#3 [auth] byucscourseops/cs110-autograder-bit-base:pull token for registry-1.docker.io\n#3 DONE 0.0s\n\n#4 [linux/amd64 internal] load metadata for docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit\n#4 DONE 0.9s\n\n#2 [linux/arm64 internal] load metadata for docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit\n#2 DONE 0.9s\n\n#5 [internal] load .dockerignore\n#5 transferring context: 2B done\n#5 DONE 0.0s\n\n#6 [internal] load build context\n#6 transferring context: 69B done\n#6 DONE 0.0s\n\n#7 [linux/arm64 2/3] ADD solution/worlds /autograder/src/worlds\n#7 ERROR: failed to calculate checksum of ref ueha7u2irt2xo5ch5gdctccpt::xotnegczaoe2mornn2ssznnar: \"/solution/worlds\": not found\n\n#8 [linux/amd64 2/3] ADD solution/worlds /autograder/src/worlds\n#8 ERROR: failed to calculate checksum of ref ueha7u2irt2xo5ch5gdctccpt::xotnegczaoe2mornn2ssznnar: \"/solution/worlds\": not found\n\n#9 [linux/arm64 1/3] FROM docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit@sha256:5853ac2109a524eb836d85c9255cf9ee9cc607019adb7d09c9c20e197a8df420\n#9 resolve docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit@sha256:5853ac2109a524eb836d85c9255cf9ee9cc607019adb7d09c9c20e197a8df420 done\n#9 DONE 0.0s\n\n#10 [linux/amd64 1/3] FROM docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit@sha256:5853ac2109a524eb836d85c9255cf9ee9cc607019adb7d09c9c20e197a8df420\n#10 resolve docker.io/byucscourseops/cs110-autograder-bit-base:winter2025-newbit@sha256:5853ac2109a524eb836d85c9255cf9ee9cc607019adb7d09c9c20e197a8df420 0.0s done\n#10 DONE 0.0s\n------\n > [linux/arm64 2/3] ADD solution/worlds /autograder/src/worlds:\n------\n------\n > [linux/amd64 2/3] ADD solution/worlds /autograder/src/worlds:\n------\nDockerfile:4\n--------------------\n   2 |     FROM byucscourseops/cs110-autograder-bit-base:winter2025-newbit\n   3 |     \n   4 | >>> ADD solution/worlds /autograder/src/worlds\n   5 |     \n   6 |     ADD activities.json /autograder/activities.json\n--------------------\nERROR: failed to solve: failed to compute cache key: failed to calculate checksum of ref ueha7u2irt2xo5ch5gdctccpt::xotnegczaoe2mornn2ssznnar: \"/solution/worlds\": not found\n"
+    ],
     "updated": true
 }
