@@ -180,7 +180,7 @@ def main(files: str, output_file: str):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--files')
-    parser.add_argument('--output_file', default='../logs/docker_output.json')
+    parser.add_argument('--output-file', required=True)
     args = parser.parse_args()
 
     main(
