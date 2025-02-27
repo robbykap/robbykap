@@ -33,7 +33,7 @@ jobs:
       - name: Send notification to Discord
         run: |
           export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
-          python ${{ github.workspace }}/.github/scripts/discord_notification/send_notification.py \
+          python ${{ github.workspace }}/.github/scripts/discord_notifications/send_notification.py \
             --type "canvas" \
             --payload "${{ github.workspace }}/.github/logs/mdxcanvas_output.json" \ 
             --author "${{ github.actor }}" \
