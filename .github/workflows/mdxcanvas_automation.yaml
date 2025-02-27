@@ -50,5 +50,5 @@ jobs:
           git config --global user.name "robbykap"
           git config --global user.email "robbykap@users.noreply.github.com"
           git add .
-          git commit -a "Update MDXCanvas Output" || echo "No changes to commit"
+          git commit -m "Update MDXCanvas Output" || echo "No changes to commit"
           git push
