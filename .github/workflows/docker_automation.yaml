@@ -64,7 +64,16 @@ jobs:
                     --author-icon "$AVATAR_URL" \
                     --branch "${{ github.ref }}"
 
+      - name: Check for file changes
+        run: |
+          if git diff --quiet ${{ github.event.before }} ${{ github.event.after }}; then
+            echo "FILES_CHANGED=false" >> $GITHUB_ENV
+          else
+            echo "FILES_CHANGED=true" >> $GITHUB_ENV
+          fi
+
       - name: Commit report
+        if: env.FILES_CHANGED == 'true'
         run: |
           git config --global user.name "robbykap"
           git config --global user.email "robbykap@users.noreply.github.com"
