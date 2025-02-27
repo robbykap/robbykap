@@ -65,7 +65,6 @@ jobs:
                     --branch "${{ github.ref }}"
 
       - name: Commit Updated Output
-        if: env.FILES_CHANGED == 'true'
         run: |
           git config --global user.name "robbykap"
           git config --global user.email "robbykap@users.noreply.github.com"
