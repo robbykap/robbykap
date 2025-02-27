@@ -48,7 +48,7 @@ jobs:
         run: cp ${{ github.workspace }}/.github/logs/docker_output.json ${{ github.workspace }}/.github/logs/docker_output_old.json || echo "No old output to copy"
 
       - name: Build docker images
-        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files "${{ env.FILES }}" --output-file "${{ github.workspace }}/.github/logs/docker_output.json"
+        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files ${{ env.FILES }} --output-file "${{ github.workspace }}/.github/logs/docker_output.json"
 
       - name: Check if Docker Output has changed and store bool
         run: |
