@@ -45,9 +45,7 @@ jobs:
           driver: docker-container
 
       - name: Build docker images
-        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py \
-                 --files "${{ env.FILES }}" \
-                 --output-file "${{ github.workspace }}/.github/logs/docker_output.json"
+        run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files ${{ env.FILES }} --output-file ${{ github.workspace }}/.github/logs/docker_output.json
 
       - name: Get User Avatar URL
         id: avatar
