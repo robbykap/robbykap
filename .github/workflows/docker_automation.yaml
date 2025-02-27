@@ -32,7 +32,6 @@ jobs:
       - name: Backup previous docker output
         run: cp ${{ github.workspace }}/.github/logs/docker_output.json ${{ github.workspace }}/.github/logs/docker_output.json.old || true
 
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
