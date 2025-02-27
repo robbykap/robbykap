@@ -44,16 +44,28 @@ jobs:
         with:
           driver: docker-container
 
+      - name: Store Current Docker Output
+        run: cp ${{ github.workspace }}/.github/logs/docker_output.json ${{ github.workspace }}/.github/logs/docker_output_old.json || echo "No old output to copy"
+
       - name: Build docker images
         run: python ${{ github.workspace }}/.github/scripts/build_dockers.py --files "${{ env.FILES }}" --output-file "${{ github.workspace }}/.github/logs/docker_output.json"
 
+      - name: Check if Docker Output has changed and store bool
+        run: |
+          if cmp -s ${{ github.workspace }}/.github/logs/docker_output.json ${{ github.workspace }}/.github/logs/docker_output_old.json; then
+            echo "DOCKER_OUTPUT_CHANGED=false" >> $GITHUB_ENV
+          else
+            echo "DOCKER_OUTPUT_CHANGED=true" >> $GITHUB_ENV
+          fi
+
       - name: Get User Avatar URL
-        id: avatar
+        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
           AVATAR_URL=$(curl -s https://api.github.com/users/${{ github.actor }} | jq -r '.avatar_url')
           echo "AVATAR_URL=$AVATAR_URL" >> $GITHUB_ENV
 
       - name: Send notification to Discord
+        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
               export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
                 python ${{ github.workspace }}/.github/scripts/discord_notifications/send_notification.py \
@@ -65,10 +77,12 @@ jobs:
                     --branch "${{ github.ref }}"
 
       - name: Commit Updated Output
+        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
           git config --global user.name "robbykap"
           git config --global user.email "robbykap@users.noreply.github.com"
+          git config pull.rebase false  # Ensure merge strategy
           git add . 
           git commit -m "Update Docker Output" || echo "No changes to commit"
-          git pull
+          git pull --no-edit
           git push
