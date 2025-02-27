@@ -3,7 +3,7 @@
         "build_homework4b_docker.sh"
     ],
     "failed_images": [
-        "build_homework3b_docker.sh"
+        "build_homework3c_docker.sh"
     ],
     "message": "Failed to build one ore more docker images.",
     "status": "failure",
