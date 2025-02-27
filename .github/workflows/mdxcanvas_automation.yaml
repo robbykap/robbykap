@@ -53,10 +53,11 @@ jobs:
             echo "FILES_CHANGED=true" >> $GITHUB_ENV
           fi
 
-      - name: Commit report
+      - name: Commit Updated Output
         if: env.FILES_CHANGED == 'true'
         run: |
           git config --global user.name "robbykap"
           git config --global user.email "robbykap@users.noreply.github.com"
-          git commit -am "Update MDXCanvas Output"
+          git add .
+          git commit -a "Update MDXCanvas Output" || echo "No changes to commit"
           git push
