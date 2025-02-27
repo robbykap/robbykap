@@ -16,6 +16,10 @@ jobs:
       - name: Install MDXCanvas
         run: pip install mdxcanvas
 
+      - name: Get current mdxcanvas output
+        run: MDXCANVAS_OUTPUT=$(cat ${{ github.workspace }}/.github/logs/mdxcanvas_output.json)
+              echo "MDXCANVAS_OUTPUT=$MDXCANVAS_OUTPUT" >> $GITHUB_ENV
+
       - name: Run MDXCanvas
         id: run_mdxcanvas
         run: |
@@ -24,13 +28,23 @@ jobs:
                                   ${{ github.workspace }}/scratch/sample-content.canvas.md.xml \
                     --output-file ${{ github.workspace }}/.github/logs/mdxcanvas_ouput.json
 
+      - name: See if mdxcanvas output changed
+        run: |
+          if [ "${{ env.MDXCANVAS_OUTPUT }}" == "$(cat ${{ github.workspace }}/.github/logs/mdxcanvas_output.json)" ]; then
+              echo "MDXCANVAS_OUTPUT_CHANGED=false" >> $GITHUB_ENV
+          else
+              echo "MDXCANVAS_OUTPUT_CHANGED=true" >> $GITHUB_ENV
+          fi
+
       - name: Get User Avatar URL
         id: avatar
+        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
           AVATAR_URL=$(curl -s https://api.github.com/users/${{ github.actor }} | jq -r '.avatar_url')
           echo "AVATAR_URL=$AVATAR_URL" >> $GITHUB_ENV
 
       - name: Send notification to Discord
+        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
           export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
           python ${{ github.workspace }}/.github/scripts/discord_notifications/send_notification.py \
