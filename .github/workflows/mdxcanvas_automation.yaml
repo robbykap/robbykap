@@ -20,8 +20,8 @@ jobs:
         id: run_mdxcanvas
         run: |
           export CANVAS_API_TOKEN=${{ secrets.CANVAS_API_TOKEN }}
-          mdxcanvas --course-info ${{ github.workspace }}/_canvas-material/course-info/cs235_w2025.json \
-                                  ${{ github.workspace }}/_canvas-material/course.canvas.md.xml \
+          mdxcanvas --course-info ${{ github.workspace }}/scratch/testing_course_info.json \
+                                  ${{ github.workspace }}/scratch/sample-content.canvas.md.xml \
                     --output-file ${{ github.workspace }}/.github/logs/mdxcanvas_ouput.json
 
       - name: Get User Avatar URL
