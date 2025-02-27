@@ -48,7 +48,7 @@ def gradescope_fields(payload: Dict[str, Any]) -> List[Dict[str, Any]]:
 
     fields.extend(generate_fields(payload, "updated_images", "Updated Images"))
 
-    if "updated_images" in payload and "failed_images" in payload:
+    if "updated_images" in payload:
         fields.append({"name": "\u200b", "value": "\u200b", "inline": True})
 
     fields.extend(generate_fields(payload, "failed_images", "Failed Images"))
