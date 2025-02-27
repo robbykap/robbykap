@@ -13,7 +13,7 @@ docker buildx build \
 
 FROM byucscourseops/cs110-autograder-bit-base:winter2025-newbit
 
-ADD solutions/worlds /autograder/src/worlds
+ADD solution/worlds /autograder/src/worlds
 
 ADD activities.json /autograder/activities.json
 
