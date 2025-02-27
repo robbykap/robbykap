@@ -57,7 +57,7 @@ class DockerBuildResult:
     def get_status(self):
         return self.json["status"]
 
-    def __call__(self):
+    def output(self):
         return self.json
 
 
@@ -165,12 +165,16 @@ def main(files: str, output_file: str):
     result = DockerBuildResult()
 
     if not docker_files:
+        with open(output_file, 'w') as f:
+            f.write(json.dumps(result.output(), indent=4))
+        f.close()
         exit(0)
 
     run_docker_scripts(docker_files, result)
 
     with open(output_file, 'w') as f:
-        f.write(json.dumps(result(), indent=4))
+        f.write(json.dumps(result.output(), indent=4))
+    f.close()
 
 
 if __name__ == '__main__':
