@@ -46,14 +46,14 @@
         points_possible="10"
         assignment_group="Examples"
     >
-        Do this stuff. Yesterday. :)
+        Do this stuff. Yesterday. :) EDIT
     </assignment>
 
     <md-page title="Small" path="small.md"/>
 
     <page title="Example Page">
         ## Header
-        This page has super useful information. Educate yourself. 
+        This page has super useful information. Educate yourself.
 
         :) ;-)
 
@@ -67,7 +67,7 @@
             title="Example Quiz"
     >
         <description>
-            This is an **example** quiz! EDIT
+            This is an **example** quiz!
 
             You should read
             <course-link type="page" title="Example Page"/>
