@@ -57,6 +57,9 @@ class DockerBuildResult:
     def get_status(self):
         return self.json["status"]
 
+    def set_updated(self, val: bool):
+        self.json["updated"] = val
+
     def output(self):
         return self.json
 
@@ -154,6 +157,8 @@ def run_docker_scripts(docker_scripts: list[Path], result):
         result.set_status("success")
         result.set_message("Successfully built all docker images.")
 
+    result.set_updated(True)
+
 
 def main(files: str, output_file: str):
     docker_files = find_docker_images(
@@ -165,6 +170,7 @@ def main(files: str, output_file: str):
     result = DockerBuildResult()
 
     if not docker_files:
+        result.set_updated(False)
         with open(output_file, 'w') as f:
             f.write(json.dumps(result.output(), indent=4))
         f.close()

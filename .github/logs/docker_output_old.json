@@ -3,5 +3,6 @@
     "failed_images": [],
     "message": "",
     "status": "success",
-    "error": []
+    "error": [],
+    "updated": false
 }
