@@ -86,7 +86,7 @@ def find_assignments(files: list[Path]) -> list[Path]:
 
         # Check if the file is in a solution folder and the
         # assignment folder is not already in the list of assignments
-        if file.parent.name == 'solution' and file.parent.parent.name not in assignments:
+        if 'solution' in file.parent.name and file.parent.parent.name not in assignments:
             assignments.append(file.parent.parent)
 
     return assignments
