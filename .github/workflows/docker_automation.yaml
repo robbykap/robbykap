@@ -63,3 +63,10 @@ jobs:
                     --author "${{ github.actor }}" \
                     --author-icon "$AVATAR_URL" \
                     --branch "${{ github.ref }}"
+
+      - name: Commit report
+        run: |
+          git config --global user.name "robbykap"
+          git config --global user.email "robbykap@users.noreply.github.com"
+          git commit -am "Update Docker Output"
+          git push
