@@ -62,7 +62,6 @@ jobs:
           git config --global user.email "robbykap@users.noreply.github.com"
           git config pull.rebase false  # Ensure merge strategy
           git add -u 
-          git rm --cached -r  ${{ github.workspace }}/.github/scripts/discord_notifications/__pycache__
           git commit -m "Update MDXCanvas Output" || echo "No changes to commit"
           git pull --no-edit
           git push
