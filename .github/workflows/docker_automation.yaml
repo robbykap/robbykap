@@ -59,13 +59,11 @@ jobs:
           fi
 
       - name: Get User Avatar URL
-        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
           AVATAR_URL=$(curl -s https://api.github.com/users/${{ github.actor }} | jq -r '.avatar_url')
           echo "AVATAR_URL=$AVATAR_URL" >> $GITHUB_ENV
 
       - name: Send notification to Discord
-        if: env.DOCKER_OUTPUT_CHANGED == 'true'
         run: |
               export DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
                 python ${{ github.workspace }}/.github/scripts/discord_notifications/send_notification.py \

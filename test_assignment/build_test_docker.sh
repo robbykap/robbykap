@@ -2,7 +2,7 @@ set -e  # Return non-zero exit code if any command fails
 
 # Build the CS 110 HW1b Autograder Docker
 
-IMAGE_NAME="byucscourseops/test_assignment"
+IMAGE_NAME="byucscourseops/test-assignment"
 IMAGE_TAG="winter2025-newbit"
 
 docker buildx build \
