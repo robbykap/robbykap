@@ -1,16 +1,8 @@
 {
     "deployed_content": {
-        "quiz": [
-            "Example Quiz"
-        ],
         "assignment": [
             "Example Assignment"
         ]
     },
-    "content_to_review": [
-        [
-            "Example Quiz",
-            "https://byu.instructure.com/courses/20736/quizzes/511429"
-        ]
-    ]
+    "content_to_review": []
 }
