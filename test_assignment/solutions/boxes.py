@@ -19,7 +19,6 @@ def stack_boxes(bit):
         bit.move()
 
     bit.left()
-    bit.left()
 
 
 if __name__ == '__main__':
