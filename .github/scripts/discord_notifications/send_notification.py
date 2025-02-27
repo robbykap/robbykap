@@ -63,7 +63,7 @@ def main(dtype: str, notification_info_path: str, payload_path: str, author: str
     message = get_message(dtype, payload)
 
     # If there is no message or the payload was not updated, do not send a notification
-    if not message or payload.get("updated", False):
+    if not message or not payload.get("updated", True):
         return
 
     # Construct the notification
