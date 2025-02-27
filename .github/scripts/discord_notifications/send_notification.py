@@ -9,6 +9,7 @@ from typing import Dict, List, Any
 
 from process_info import get_info
 from parse_fields import get_fields
+from parse_message import get_message
 
 
 def hex_to_decimal(hex_color: str) -> int:
@@ -58,6 +59,13 @@ def main(dtype: str, notification_info_path: str, payload_path: str, author: str
     # Build notification fields
     fields = get_fields(dtype, payload)
 
+    # Get the message
+    message = get_message(dtype, payload)
+
+    # If there is no message, means there is no content to notify
+    if not message:
+        return
+
     # Construct the notification
     notification = get_notification(
         username=notification_info["name"],
@@ -66,7 +74,7 @@ def main(dtype: str, notification_info_path: str, payload_path: str, author: str
         author_icon=author_icon,
         title=notification_info["title"],
         branch=branch,
-        message=payload["message"],
+        message=message,
         color=hex_to_decimal(notification_info["color"]),
         fields=fields,
         footer=notification_info["footer"]

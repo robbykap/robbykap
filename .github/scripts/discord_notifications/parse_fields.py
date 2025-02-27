@@ -63,4 +63,3 @@ def get_fields(dtype: str, payload: Dict[str, Any]) -> List[Dict[str, Any]]:
         return canvas_fields(payload)
     elif dtype == "gradescope":
         return gradescope_fields(payload)
-    raise ValueError('Invalid notification type. Must be either "canvas" or "gradescope".')
