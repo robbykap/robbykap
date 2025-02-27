@@ -19,7 +19,7 @@ def stack_boxes(bit):
         bit.move()
 
     bit.left()
-
+    bit.right()
 
 if __name__ == '__main__':
     stack_boxes(Bit.new_bit)

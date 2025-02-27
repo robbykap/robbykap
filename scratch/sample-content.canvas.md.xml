@@ -53,7 +53,7 @@
 
     <page title="Example Page">
         ## Header
-        This page has super useful information. Educate yourself. EDIT
+        This page has super useful information. Educate yourself. 
 
         :) ;-)
 
@@ -67,7 +67,7 @@
             title="Example Quiz"
     >
         <description>
-            This is an **example** quiz! 
+            This is an **example** quiz! EDIT
 
             You should read
             <course-link type="page" title="Example Page"/>
