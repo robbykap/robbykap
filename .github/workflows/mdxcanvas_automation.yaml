@@ -13,9 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set correct permissions
-        run: chmod -R 777 ${{ github.workspace }}/.github/logs
-
       - name: Install MDXCanvas
         run: pip install mdxcanvas
 
@@ -37,8 +34,9 @@ jobs:
           else
               echo "MDXCANVAS_OUTPUT_CHANGED=true" >> $GITHUB_ENV
           fi
-          
-          echo cat ${{ github.workspace }}/.github/logs/mdxcanvas_output.json
+
+      - name: Display mdxcanvas output
+        run: cat ${{ github.workspace }}/.github/logs/mdxcanvas_output.json
 
       - name: Get User Avatar URL
         id: avatar

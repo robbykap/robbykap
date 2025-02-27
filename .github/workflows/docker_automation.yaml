@@ -17,9 +17,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set correct permissions
-        run: chmod -R 777 ${{ github.workspace }}/.github/logs
-
       - name: Get changes
         run: |
             files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }})
