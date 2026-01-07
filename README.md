@@ -22,8 +22,6 @@
 - **CS 452** - Databases
 - **CS 473** - Advanced Machine Learning
 
----
-
 ## Languages and Tools
 
 <p>
@@ -38,13 +36,9 @@
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="github actions" width="40" height="40"/>
 </p>
 
----
-
 ## Current Projects
 
 **GitHub Dashboard App** - A web application currently in development to allow for quick repo overviews.
-
----
 
 ## Past Projects
 
@@ -55,8 +49,6 @@
   Development)
 - **[NFL Play Predictor](https://github.com/robbykap/NFL_Play_Predictor)** - Machine learning model for **CS 270** (
   Machine Learning)
-
----
 
 ## Connect With Me
 
