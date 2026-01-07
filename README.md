@@ -2,15 +2,10 @@
 
 ## About Me
 
-**Name:** Robert Greathouse
-
-**School:** Brigham Young University
-
-**Major:** Machine Learning
-
-**Year:** Senior
-
-**Work:** CS Core Course Dev TA
+I am from Southern California and enjoy building things with my hands, going to the gym, and watching baseball, go
+Dodgers! I am currently attending Brigham Young University as a Senior studying Computer Science with a Machine Learning
+Emphasis. My current class load includes BYU's CS 452 - **Databases Class** and CS 473 - **Adv. Machine Learning**. I 
+am actively pursuing a Software Engineer or Machine Learning Engineer Internship.
 
 ### Currently Working With
 
