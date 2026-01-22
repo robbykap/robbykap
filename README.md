@@ -45,6 +45,9 @@ am actively pursuing a Software Engineer or Machine Learning Engineer Internship
 - **[NFL Play Predictor](https://github.com/robbykap/NFL_Play_Predictor)** - Machine learning model for **CS 270** (
   Machine Learning)
 
+## Personal Portfolio
+[robertgreathouse.dev](https://robertgreathouse.dev/)
+
 ## Connect With Me
 
 📧 **Email:** [robert.k.greathouse@gmail.com](mailto:robert.k.greathouse@gmail.com)
